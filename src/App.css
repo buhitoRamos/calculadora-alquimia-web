@@ -1,9 +1,9 @@
 .overFlow {
-  border : solid 1px rgb(207, 199, 199);         
-  color : #ffffff;
-  padding : 4px;
-  width : auto;
-  height : 300px;
+  border: solid;
+  color: #ffffff;
+  padding: 4px;
+  width: auto;
+  min-height: auto;
+  max-height: 200px;
   overflow: auto;
 }
-

@@ -2,30 +2,28 @@ import './App.css'
 import React, { useState } from 'react'
 
 const App = ()=> {
-  const [aromsName, setAromsName] = useState(
-    [{aroma:"AROMA 1"}, {aroma:"AROMA 2"}, {aroma:"AROMA 3"}]
-    );
+  const [aromsName, setAromsName] = useState([{value:"AROMA", id:0}]);
 
-  const _addMoreAroms = () => {
-    const aroma="AROMA 11"
-   setAromsName({...aromsName,
-    aroma
-  });
- 
+  const _addAroms = () => {
+    const id=aromsName.length;
+    const aroma = {value:"AROMA", id};
+    setAromsName([ ...aromsName, aroma])
   };
+  const _deleteAroms = () => {
+   const idToDeleted = aromsName.length -1;
+   const newAromsName = aromsName.filter(({id}) => id !== idToDeleted);
+   setAromsName(newAromsName)
+  }
 
 
   const _renderAroms = () => {
-   
       return (
         aromsName.map(aroma =>
           
-
-          <div className="input-group mb-3" id={aroma.aroma}>
-            <span className="input-group-text" id="basic-addon1">{aroma.aroma}</span>
+          <div className="input-group mb-3" id={aroma.value}>
+            <span className="input-group-text" id="basic-addon1">{aroma.value}</span>
             <input type="text" className="form-control" placeholder="ingrese porcentaje" aria-label="Username" aria-describedby="basic-addon1" />
           </div>
-
         )
       )
     }
@@ -51,11 +49,19 @@ const App = ()=> {
         </div>
           
         
-        <div className="position-relative">
-          <button type="button" 
-          className="btn btn-primary position-absolute top-0 start-50 translate-middle-x"
-          onClick={()=> _addMoreAroms()}>
-            Agregar mas Aromas</button>
+        <div className="mp-2">
+          <span className=" row align-items-center mr-50">
+          <button type="button"
+           className="btn btn-primary"
+            onClick={() => _addAroms()}>
+            Agregar aroma
+          </button>
+          <button type="button"
+            className="btn btn-danger mt-1"
+            onClick={() => _deleteAroms()}>
+            Eliminar aroma
+          </button>
+          </span>
         </div>
       </div>
     );
