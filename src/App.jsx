@@ -1,5 +1,6 @@
 import './App.css'
 import React, { useState } from 'react'
+import Aroms from"./components/Aroms/Aroms"
 
 const App = () => {
   const [aroms, setAroms] = useState([{ name: "", index: 0, value: "" }]);
@@ -45,7 +46,7 @@ const App = () => {
     setForm(newForm)
   }
 
-  const _renderAroms = () => {
+  /*const _renderAroms = () => {
     return (
       aroms.map(aroma =>
 
@@ -60,7 +61,7 @@ const App = () => {
         </div>
       )
     )
-  }
+  }*/
 
 
   return (
@@ -84,11 +85,7 @@ const App = () => {
          aria-describedby="nicotina"
          onChange={_handleFormChange} />
       </div>
-      <div className="overFlow">
-        {
-          _renderAroms()
-        }
-      </div>
+      <Aroms aroms={aroms} handleChange={_handleChange} />
 
 
       <div className="mp-2">
