@@ -3,6 +3,11 @@ import React, { useState } from 'react'
 
 const App = () => {
   const [aroms, setAroms] = useState([{ name: "", index: 0, value: "" }]);
+  const [form, setForm] = useState([
+    {name: "GLICERINA", value:""}, 
+    {name:"PROPILEN", value: ""},
+    {name: "NICOTINA", value: ""}
+    ])
 
   const _addAroms = () => {
     const index = aroms.length;
@@ -28,12 +33,23 @@ const App = () => {
     });
     setAroms(newArom);
   }
+  const _handleFormChange = (ev) => {
+    const {id} = ev.target
+    const { value } = ev.target;
+    let newForm  = form.map(function(form) {
+      if(form.name === id) {
+        form.value = value
+      }
+      return form
+    });
+    setForm(newForm)
+  }
 
   const _renderAroms = () => {
     return (
       aroms.map(aroma =>
 
-        <div className="input-group mb-3" id={aroma.value}>
+        <div className="input-group mb-3" id={aroma.index}>
           <input className="input-group-text" id="label"
             placeholder="aroma" defaultValue={aroma.name} onChange={(ev) => _handleChange(aroma, ev)} />
           <input type="text" className="form-control"
@@ -46,20 +62,27 @@ const App = () => {
     )
   }
 
+
   return (
     <div className="container">
       <p className="text-center bg-primary  text-white">Ingreso de aromas y porcentajes</p>
       <div className="input-group mb-3 pt-1">
-        <span className="input-group-text" id="basic-addon1">GLICERINA</span>
-        <input type="text" className="form-control" placeholder="ingrese porcentaje" aria-label="Username" aria-describedby="basic-addon1" />
+        <span className="input-group-text" id="basic-addon1">{form[0].name}</span>
+        <input type="number" className="form-control" placeholder="ingrese porcentaje" id={form[0].name} 
+        aria-describedby="glicerina" defaultValue={form[0].value}
+        onChange={_handleFormChange} />
       </div>
       <div className="input-group mb-3">
-        <span className="input-group-text" id="basic-addon1">PROPILEN</span>
-        <input type="text" className="form-control" placeholder="ingrese porcentaje" aria-label="Username" aria-describedby="basic-addon1" />
+        <span className="input-group-text" id="basic-addon1">{form[1].name}</span>
+        <input type="number" className="form-control" placeholder="ingrese porcentaje" id={form[1].name} 
+        aria-describedby="propilenglicol"
+        onChange={_handleFormChange} />
       </div>
       <div className="input-group mb-3">
-        <span className="input-group-text" id="basic-addon1">NICOTINA</span>
-        <input type="text" className="form-control" placeholder="ingrese porcentaje" aria-label="Username" aria-describedby="basic-addon1" />
+        <span className="input-group-text" id="basic-addon1">{form[2].name}</span>
+        <input type="number" className="form-control" placeholder="ingrese porcentaje" id={form[2].name}
+         aria-describedby="nicotina"
+         onChange={_handleFormChange} />
       </div>
       <div className="overFlow">
         {
