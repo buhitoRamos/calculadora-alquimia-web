@@ -46,12 +46,37 @@ const App = () => {
       if (form.name === id) {
        if(value.length < maxLength) {
          form.value = value
-       } 
+       }
         
       }
       return form
     });
+    
+    const obj = _autoComplete(id, value);
+    if(obj.id === "GLICERINA") {
+      newForm[1].value =  obj.value;
+    } else if (obj.id === "PROPILEN") {
+      newForm[0].value =  obj.value;
+    }
+    
+    
     setForm(newForm)
+  }
+
+  const _autoComplete = (id, val) => {
+    const value = val === "" ? 0 : 100 - val ;
+    const obj = {
+      id,
+      value
+    }
+    return obj
+   /* if (id === "GLICERINA") {   
+      const valuePg = 100 - value;
+      return valuePg
+    } else {
+      const valueGv = 100 - value
+    }*/
+
   }
 
 
