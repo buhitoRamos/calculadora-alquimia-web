@@ -6,6 +6,7 @@ import TextArea from './components/TextArea/TextArea'
 const App = () => {
   const [aroms, setAroms] = useState([{ name: "", index: 0, value: "" }]);
   const [form, setForm] = useState([
+    { name: "ML TOTAL", value: "" },
     { name: "GLICERINA", value: "" },
     { name: "PROPILEN", value: "" },
     { name: "NICOTINA", value: "" }
@@ -56,25 +57,44 @@ const App = () => {
     
     const obj = _autoComplete(id, value);
     if(obj.id === "GLICERINA") {
-      newForm[1].value =  obj.value;
+      newForm[2].value =  obj.value;
     } else if (obj.id === "PROPILEN") {
-      newForm[0].value =  obj.value;
+      newForm[1].value =  obj.value;
     }
     
     
     setForm(newForm)
   }
+
+  const _calculateAroms = () => {
+    let rtaAroms = "";
+
+  }
+
+
+
   const _calculate = () => {
     let text = ""
     form.forEach(el => {
-      text=`${text} ${el.name}: ${el.value}ml \n`
+      let value = parseFloat(el.value);
+      if(el.name === "ML TOTAL") {
+       text=`${text} ${el.name}: ${el.value}ml \n` 
+      } else {
+        const totalML = parseFloat(form[0].value);
+        value = totalML * value / 100;
+        text=`${text} ${el.name}: ${value}ml \n` 
+      }
+      
     });
     setResult(text)
   }
+
+
   const _clear =() => {
     setResult("");
     setAroms([{ name: "", index: 0, value: "" }])
     setForm([
+      { name: "ML TOTAL", value: "" },
       { name: "GLICERINA", value: "" },
       { name: "PROPILEN", value: "" },
       { name: "NICOTINA", value: "" }
@@ -83,7 +103,7 @@ const App = () => {
   }
 
   const _autoComplete = (id, val) => {
-    const value = val === "" ? 0 : 100 - val ;
+    const value = val === "" ? "" : 100 - val ;
     const obj = {
       id,
       value
