@@ -10,7 +10,7 @@ const App = () => {
     { name: "PROPILEN", value: "" },
     { name: "NICOTINA", value: "" }
   ])
-  const [result, SetResult] = useState({value:"hola"});
+  const [result, setResult] = useState("");
 
   const addAroms = () => {
     const index = aroms.length;
@@ -69,7 +69,17 @@ const App = () => {
     form.forEach(el => {
       text=`${text} ${el.name}: ${el.value}ml \n`
     });
-    console.log(text)
+    setResult(text)
+  }
+  const _clear =() => {
+    setResult("");
+    setAroms([{ name: "", index: 0, value: "" }])
+    setForm([
+      { name: "GLICERINA", value: "" },
+      { name: "PROPILEN", value: "" },
+      { name: "NICOTINA", value: "" }
+    ])
+
   }
 
   const _autoComplete = (id, val) => {
@@ -105,6 +115,12 @@ const App = () => {
           onClick={() => _calculate()}
           >
           Calcular
+        </button>
+        <button type="button"
+          className="btn btn-danger mt-1 w-100"
+          onClick={() => _clear()}
+          >
+          Reset
         </button>
         </div>
       </div>
