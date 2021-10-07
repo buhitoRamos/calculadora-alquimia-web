@@ -93,7 +93,7 @@ const App = () => {
 
 
   return (
-    <div className="container">
+    <div className="container mt-1">
       <div className="row">
         <div className="col-6">
           <Aroms aroms={aroms}
