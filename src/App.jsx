@@ -14,7 +14,7 @@ const App = () => {
   const [result, setResult] = useState("");
 
   const addAroms = () => {
-    const index = aroms.length;
+    const index = aroms.length
     const aroma = {name: "", index, value: ""  };
     setAroms([...aroms, aroma])
   };
@@ -66,40 +66,41 @@ const App = () => {
     setForm(newForm)
   }
 
-  const _calculateAroms = () => {
-    let rtaAroms = "";
-
-  }
 
 
 
   const _calculate = () => {
+
+    // falta restar del total del pg la catidad de aromas utilizada y validaciones
     let text = ""
+    const totalML = parseFloat(form[0].value);
+    text = `${form[0].name}: ${form[0].value}ml \n`
+    
     form.forEach(el => {
-      let value = parseFloat(el.value);
-      if(el.name === "ML TOTAL") {
-       text=`${text} ${el.name}: ${el.value}ml \n` 
-      } else {
-        const totalML = parseFloat(form[0].value);
-        value = totalML * value / 100;
-        text=`${text} ${el.name}: ${value}ml \n` 
-      }
-      
+      let formValue = parseFloat(el.value);
+      formValue = totalML * formValue / 100;
+      text = `${text} ${el.name}: ${formValue}ml \n`  
     });
+
+    aroms.forEach(el => {
+      let aromsValue = parseFloat(el.value);
+      aromsValue = totalML * aromsValue / 100;
+      text = `${text} ${el.name}: ${aromsValue}ml \n`
+    })
+
     setResult(text)
   }
 
 
   const _clear =() => {
     setResult("");
-    setAroms([{ name: "", index: 0, value: "" }])
+    setAroms([]);
     setForm([
       { name: "ML TOTAL", value: "" },
       { name: "GLICERINA", value: "" },
       { name: "PROPILEN", value: "" },
       { name: "NICOTINA", value: "" }
     ])
-
   }
 
   const _autoComplete = (id, val) => {
