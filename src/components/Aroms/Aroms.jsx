@@ -1,5 +1,6 @@
 import React from 'react'
 import "./aroms.css"
+import PropsTypes from 'prop-types'
 
 
 const _renderAroms = (aroms, handleChange) => {
@@ -79,5 +80,12 @@ const Aroms = ({ aroms, form, handleChange, handleFormChange, addAroms, deleteAr
     </div>
   </section>
 )
+Aroms.PropsTypes = {
+  handleChange: PropsTypes.func.isRequired,
+  handleFormChange :PropsTypes.func.isRequired,
+  aroms: PropsTypes.array.isRequired,
+  form: PropsTypes.array.isRequired
+
+}
 
 export default Aroms;

@@ -2,6 +2,8 @@ import './App.css'
 import React, { useState } from 'react'
 import Aroms from "./components/Aroms/Aroms"
 import TextArea from './components/TextArea/TextArea'
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css'
 
 const App = () => {
   const [aroms, setAroms] = useState([{ name: "", index: 0, value: "" }]);
@@ -65,27 +67,58 @@ const App = () => {
     
     setForm(newForm)
   }
-
-
+  const _confirmAlert = (message) => {
+    confirmAlert({
+      title: 'error',
+      message,
+      buttons: [
+          {
+              label: 'Reset',
+              onClick: () => {
+                  _clear()
+              }
+          },
+          {
+              label: 'Cancelar',
+          }
+      ]
+  });
+  }
+    
+  const _sumAroms = (totalML) => {
+    let totalMlArom = parseFloat(form[3].value) ? parseFloat(form[3].value) : 0;
+    aroms.forEach(el => {
+      let formValue = parseFloat(el.value);
+      totalMlArom = totalMlArom + formValue;
+    })
+    totalMlArom = totalMlArom * totalML/100;
+    return totalMlArom
+  }
 
 
   const _calculate = () => {
-
-    // falta restar del total del pg la catidad de aromas utilizada y validaciones
     let text = ""
-    const totalML = parseFloat(form[0].value);
-    text = `${form[0].name}: ${form[0].value}ml \n`
-    
-    form.forEach(el => {
-      let formValue = parseFloat(el.value);
-      formValue = totalML * formValue / 100;
-      text = `${text} ${el.name}: ${formValue}ml \n`  
-    });
+    const totalML = parseFloat(form[0].value) ? parseFloat(form[0].value) :
+     _confirmAlert('Falta ingresar un valor en ml en ML TOTAL');
+    text = `${text} ${form[0].name}: ${form[0].value}ml \n`
+    const totalMlArom = _sumAroms(totalML);
+    let totalMlPg = (parseFloat(form[2].value) * totalML/100) - totalMlArom;
+    if(totalMlPg < 0) {
+      _confirmAlert('Debe utilizar mas % de Propilengligol o menos cantdad de aroma/ nicotina');
+    }
+    let totalGlicerina = form[1].value ? parseFloat(form[1].value) * totalML /100 :
+    _confirmAlert('Debe utilizar un porcentaje de glicerina');;
+    text = `${text} ${form[1].name}: ${totalGlicerina}ml \n`
+    text = `${text} ${form[2].name}: ${totalMlPg}ml \n`
+    let mlNico = form[3].value ? form[3].value * totalML/100 : 0;
+    text = `${text} ${form[3].name}: ${mlNico}ml \n`
 
     aroms.forEach(el => {
       let aromsValue = parseFloat(el.value);
       aromsValue = totalML * aromsValue / 100;
-      text = `${text} ${el.name}: ${aromsValue}ml \n`
+      aromsValue = aromsValue ? `${aromsValue}ml` : 'sin valor'
+      let name = el.name ? el.name : 'aroma'
+      text = `${text} ${name}: ${aromsValue}\n`
     })
 
     setResult(text)
