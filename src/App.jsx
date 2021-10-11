@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import AlchemyCalculator from './components/Alchemy-calculator/AlchemyCalculator'
+import OhmsCalculator from './components/Ohms-calculator/OhmsCalculator'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
 const App = () => {
@@ -10,7 +11,7 @@ const App = () => {
     return (
       <div className="container">
         <button type="button"
-          className="btn btn-danger mt-1 w-100"
+          className="btn btn-danger mt-1 mb-2 w-100"
           onClick={() => setIsAlchemy(!isAlchemy)}>
           cambiar a modo ohmios
         </button>
@@ -21,12 +22,13 @@ const App = () => {
   } else {
     return (
       <div className="container">
+       
         <button type="button"
-          className="btn btn-dark mt-1 w-100"
+          className="btn btn-dark mt-1 mb-2 w-100"
           onClick={() => setIsAlchemy(!isAlchemy)}>
           cambiar a modo alquimia
         </button>
-        <h2>oms</h2>
+        <OhmsCalculator/>
       </div>
     )
   }

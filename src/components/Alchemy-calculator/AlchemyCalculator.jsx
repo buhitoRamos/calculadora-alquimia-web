@@ -6,7 +6,6 @@ import 'react-confirm-alert/src/react-confirm-alert.css'
 import "./AlchemyCalculator.css"
 
 const AlchemyCalculator = () => {
-
   const [aroms, setAroms] = useState([{ name: "", index: 0, value: "" }]);
   const [form, setForm] = useState(
     [
@@ -79,7 +78,7 @@ const AlchemyCalculator = () => {
         {
           label: 'Reset',
           onClick: () => {
-            _clear()
+            clear()
           }
         },
         {
@@ -99,7 +98,7 @@ const AlchemyCalculator = () => {
     return totalMlArom;
   }
 
-  const _calculate = () => {
+  const calculate = () => {
     let text = "";
     const totalML = parseFloat(form[0].value) ? parseFloat(form[0].value) :
       _confirmAlert('Debe ingresar un valor en "ML TOTAL"');
@@ -126,7 +125,7 @@ const AlchemyCalculator = () => {
     setResult(text)
   }
 
-  const _clear = () => {
+  const clear = () => {
     setResult("");
     setAroms([]);
     setForm(
@@ -149,7 +148,7 @@ const AlchemyCalculator = () => {
   }
 
   return (
-    <div className="container mt-1">
+    <section className="container mt-1">
       <div className="row">
         <div className="col-6">
           <Aroms aroms={aroms}
@@ -161,24 +160,14 @@ const AlchemyCalculator = () => {
         </div>
 
         <div className="col-6">
-          <div className="text-center text-white bg-danger">
-            <h4>calculadora de alquimia</h4>
-            <p>by buh!to</p>
-          </div>
-          <TextArea result={result} />
-          <button type="button"
-            className="btn btn-secondary w-100"
-            onClick={() => _calculate()}>
-            Calcular
-          </button>
-          <button type="button"
-            className="btn btn-danger mt-1 w-100"
-            onClick={() => _clear()}>
-            Reset
-          </button>
+          <TextArea result={result}
+          Type="Calculadora de alquimia by buh!to"
+          Class="text-area-alchemy"
+          calculate={calculate}
+          clear={clear} />
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
