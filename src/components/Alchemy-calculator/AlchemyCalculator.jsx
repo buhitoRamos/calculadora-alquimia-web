@@ -52,7 +52,7 @@ const AlchemyCalculator = () => {
     const { value, maxLength } = ev.target;
     let newForm = form.map(function (form) {
       if (form.name === id) {
-        if (value.length < maxLength) {
+        if (value.length < maxLength + 1) {
           form.value = value;
         }
 

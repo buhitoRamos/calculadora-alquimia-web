@@ -28,6 +28,10 @@ const Aroms = ({ aroms, form, handleChange, handleFormChange, addAroms, deleteAr
   <section className="max-width-section">
     <AlchemyInput 
     form={form}
+    placeHolder1="ml"
+    placeHolder2="%"
+    maxLength1="10"
+    maxLength2="2"
     text="Ingreso de aromas y porcentajes"
     handleFormChange= {handleFormChange}/>
 
