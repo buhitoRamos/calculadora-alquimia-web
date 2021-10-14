@@ -13,7 +13,7 @@ const App = () => {
         <button type="button"
           className="btn btn-danger mt-1 mb-2 w-100"
           onClick={() => setIsAlchemy(!isAlchemy)}>
-          cambiar a modo ohmios
+          cambiar a modo ley de ohm
         </button>
         <AlchemyCalculator />
       </div>

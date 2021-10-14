@@ -161,7 +161,7 @@ const AlchemyCalculator = () => {
 
         <div className="col-6">
           <TextArea result={result}
-          Type="Calculadora de alquimia by buh!to"
+          Type="Alquimia by buh!to"
           Class="text-area-alchemy"
           calculate={calculate}
           clear={clear} />
