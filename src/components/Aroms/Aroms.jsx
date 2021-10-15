@@ -14,7 +14,7 @@ const _renderAroms = (aroms, handleChange) => {
           placeholder="%" aria-label="input"
           aria-describedby="ingreso de aroma"
           type="number"
-          maxLength="3"
+          maxLength="4"
           value={aroma.value}
           onChange={(ev) => handleChange(aroma, ev)} />
       </div>
@@ -28,10 +28,10 @@ const Aroms = ({ aroms, form, handleChange, handleFormChange, addAroms, deleteAr
   <section className="max-width-section">
     <AlchemyInput 
     form={form}
-    placeHolder1="ml"
+    placeHolder1="ml" 
     placeHolder2="%"
     maxLength1="10"
-    maxLength2="2"
+    maxLength2="3"
     text="Ingreso de aromas y porcentajes"
     handleFormChange= {handleFormChange}/>
 
