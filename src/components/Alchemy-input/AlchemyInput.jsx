@@ -44,8 +44,5 @@ const AlchemyInput = ({ form, handleFormChange, text, placeHolder1, placeHolder2
 AlchemyInput.PropsTypes = {
   handleChange: PropsTypes.func.isRequired,
   form: PropsTypes.array.isRequired
-
 }
-
-
 export default AlchemyInput

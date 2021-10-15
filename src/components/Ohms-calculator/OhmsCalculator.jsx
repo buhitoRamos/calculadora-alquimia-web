@@ -79,6 +79,7 @@ const OhmsCalculator = () => {
       if (form.value > 0) {
         cont++
       }
+      return ""
     });
     if (cont === 2) {
       const volt = form[0].value;
@@ -94,15 +95,10 @@ const OhmsCalculator = () => {
       text = volt === "" ? `${text} ${_voltCalculate(amp, watt, ohms)}` : `${text} Volt: ${volt}`;
       setResult(text);
     } else {
-      setResult("Se denbe ingresar solo 2 valores para calcular el resto")
+      setResult("Se denbe ingresar solo 2 valores para calcular el resto");
     }
-
-
-
-
   }
   const clear = () => {
-
     setForm(
       [
         { name: "VOLTIOS", value: "" },
@@ -113,7 +109,6 @@ const OhmsCalculator = () => {
     )
     setResult("")
   }
-
 
   return (
     <section className="container mt-1">

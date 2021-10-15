@@ -18,7 +18,7 @@ const AlchemyCalculator = () => {
   const [result, setResult] = useState("");
 
   const addAroms = () => {
-    const index = aroms.length
+    const index = aroms.length;
     const aroma = { name: "", index, value: "" };
     setAroms([...aroms, aroma])
   };
@@ -55,7 +55,6 @@ const AlchemyCalculator = () => {
         if (value.length < maxLength + 1) {
           form.value = value;
         }
-
       }
       return form
     });

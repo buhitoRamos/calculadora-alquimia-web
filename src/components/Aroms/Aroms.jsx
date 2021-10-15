@@ -25,7 +25,7 @@ const _renderAroms = (aroms, handleChange) => {
 
 
 const Aroms = ({ aroms, form, handleChange, handleFormChange, addAroms, deleteAroms }) => (
-  <section className="max-width-section">
+  <section>
     <AlchemyInput 
     form={form}
     placeHolder1="ml" 
@@ -61,7 +61,6 @@ Aroms.PropsTypes = {
   handleFormChange :PropsTypes.func.isRequired,
   aroms: PropsTypes.array.isRequired,
   form: PropsTypes.array.isRequired
-
 }
 
 export default Aroms;
