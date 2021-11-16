@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Aroms from "../Aroms/Aroms"
-import TextArea from '../Text-area/TextArea'
+import TextArea from '../Text-area'
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import "./AlchemyCalculator.css"

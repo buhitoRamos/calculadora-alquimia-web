@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import AlchemyCalculator from './components/Alchemy-calculator/AlchemyCalculator'
-import OhmsCalculator from './components/Ohms-calculator/OhmsCalculator'
+import AlchemyCalculator from './components/Alchemy-calculator'
+import OhmsCalculator from './components/Ohms-calculator'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
 const App = () => {

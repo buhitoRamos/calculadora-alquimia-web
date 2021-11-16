@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import TextArea from "../Text-area/TextArea";
+import TextArea from "../Text-area";
 import AlchemyInput from "../Alchemy-input/AlchemyInput";
 
 const OhmsCalculator = () => {
