@@ -3,7 +3,6 @@ import Aroms from "../Aroms/Aroms"
 import TextArea from '../Text-area/TextArea'
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
-import "./AlchemyCalculator.css"
 
 const AlchemyCalculator = () => {
   const [aroms, setAroms] = useState([{ name: "", index: 0, value: "" }]);
@@ -147,9 +146,9 @@ const AlchemyCalculator = () => {
   }
 
   return (
-    <section className="container mt-1">
-      <div className="row">
-        <div className="col-6">
+    <section className="p-4 md:container md:mx-auto">
+      <div className="flex flex-wrap -mx-2">
+        <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
           <Aroms aroms={aroms}
             form={form}
             handleChange={handleChange}
@@ -158,10 +157,10 @@ const AlchemyCalculator = () => {
             deleteAroms={deleteAroms}/>
         </div>
 
-        <div className="col-6">
+        <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
           <TextArea result={result}
           Type="Alquimia by buh!to"
-          Class="text-area-alchemy"
+          Class="bg-gradient-to-br from-blue-400 to-green-500 text-white w-full h-full min-h-[12rem] border border-yellow-300 font-sans p-4 shadow-lg transition-shadow duration-500 ease-in-out block resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400"
           calculate={calculate}
           clear={clear} />
         </div>
