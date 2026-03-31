@@ -17,8 +17,8 @@ const App = () => {
                 Cambiar a modo Ley de Ohm
             </button>
         <AlchemyCalculator />
+        </div>
       </div>
-
     );
   } else {
     return (
@@ -30,6 +30,7 @@ const App = () => {
                 Cambiar a modo Alquimia
             </button>
         <OhmsCalculator/>
+        </div>
       </div>
     )
   }
