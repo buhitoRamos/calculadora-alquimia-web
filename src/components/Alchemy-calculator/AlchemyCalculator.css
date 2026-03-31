@@ -1,0 +1,10 @@
+.overFlow {
+  border: solid;
+  color: #ffffff;
+  padding: 4px;
+  width: auto;
+  min-height: auto;
+  max-height: 200px;
+  overflow: auto;
+}
+
