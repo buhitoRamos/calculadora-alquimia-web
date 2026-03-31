@@ -9,26 +9,25 @@ const App = () => {
 
   if (isAlchemy) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
-        <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
-            <button type="button"
-                className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
-                onClick={() => setIsAlchemy(!isAlchemy)}>
-                Cambiar a modo Ley de Ohm
-            </button>
+      <div className="container">
+        <button type="button"
+          className="btn btn-danger mt-1 mb-2 w-100"
+          onClick={() => setIsAlchemy(!isAlchemy)}>
+          cambiar a modo ley de ohm
+        </button>
         <AlchemyCalculator />
       </div>
 
     );
   } else {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
-        <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
-            <button type="button"
-                className="w-full bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded mb-4"
-                onClick={() => setIsAlchemy(!isAlchemy)}>
-                Cambiar a modo Alquimia
-            </button>
+      <div className="container">
+       
+        <button type="button"
+          className="btn btn-dark mt-1 mb-2 w-100"
+          onClick={() => setIsAlchemy(!isAlchemy)}>
+          cambiar a modo alquimia
+        </button>
         <OhmsCalculator/>
       </div>
     )

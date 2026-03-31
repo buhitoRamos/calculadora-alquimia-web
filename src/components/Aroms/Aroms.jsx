@@ -7,10 +7,10 @@ import AlchemyInput from "../Alchemy-input/AlchemyInput"
 const _renderAroms = (aroms, handleChange) => {
   return (
     aroms.map(aroma =>
-      <div className="flex items-center mb-2" id={aroma.index} key={aroma.index}>
-        <input className="flex-none w-1/3 p-2 bg-gray-200 border border-gray-300 rounded-l text-sm" id="label"
+      <div className="input-group mb-1" id={aroma.index} key={aroma.index}>
+        <input className="input-group-text max-width-lbl" id="label"
           placeholder="aroma" defaultValue={aroma.name} onChange={(ev) => handleChange(aroma, ev)} />
-        <input className="flex-grow p-2 border border-gray-300 rounded-r text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        <input className="form-control max-width-input"
           placeholder="%" aria-label="input"
           aria-describedby="ingreso de aroma"
           type="number"
@@ -35,20 +35,20 @@ const Aroms = ({ aroms, form, handleChange, handleFormChange, addAroms, deleteAr
     text="Ingreso de aromas y porcentajes"
     handleFormChange= {handleFormChange}/>
 
-    <div className="border border-gray-300 rounded p-2 mb-4 max-h-48 overflow-auto bg-gray-50">
+    <div className="overFlow">
       {
         _renderAroms(aroms, handleChange)
       }
     </div>
-    <div className="mt-4">
-      <span className="flex justify-between items-center">
+    <div className="mp-2">
+      <span className=" row align-items-center mr-50">
         <button type="button"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+          className="btn btn-primary"
           onClick={() => addAroms()}>
           Agregar aroma
         </button>
         <button type="button"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          className="btn btn-danger mt-1"
           onClick={() => deleteAroms()}>
           Eliminar aroma
         </button>
