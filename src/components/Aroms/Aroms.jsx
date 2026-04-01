@@ -1,5 +1,4 @@
 import React from 'react'
-import "./aroms.css"
 import PropsTypes from 'prop-types'
 import AlchemyInput from "../Alchemy-input/AlchemyInput"
 
