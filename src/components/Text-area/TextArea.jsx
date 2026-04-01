@@ -1,5 +1,4 @@
 import React from 'react'
-import "./textArea.css"
 import PropTypes from 'prop-types'
 
 
