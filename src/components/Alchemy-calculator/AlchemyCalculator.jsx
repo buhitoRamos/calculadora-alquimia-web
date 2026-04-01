@@ -146,9 +146,9 @@ const AlchemyCalculator = () => {
   }
 
   return (
-    <section className="p-4 md:container md:mx-auto">
-      <div className="flex flex-wrap -mx-2">
-        <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
+    <section>
+      <div className="flex flex-wrap gap-4">
+        <div className="w-full md:w-[48%]">
           <Aroms aroms={aroms}
             form={form}
             handleChange={handleChange}
@@ -157,10 +157,12 @@ const AlchemyCalculator = () => {
             deleteAroms={deleteAroms}/>
         </div>
 
-        <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
+        <div className="w-full md:flex-1">
           <TextArea result={result}
-          Type="Alquimia by buh!to"
-          Class="bg-gradient-to-br from-blue-400 to-green-500 text-white w-full h-full min-h-[12rem] border border-yellow-300 font-sans p-4 shadow-lg transition-shadow duration-500 ease-in-out block resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400"
+          Type="Alquimia"
+          headerClass="bg-violet-900/40 text-violet-300 border border-violet-700/30"
+          Class="bg-slate-900/60 text-violet-200 w-full h-full min-h-[14rem] border border-violet-800/30 font-mono text-sm p-4 rounded-lg shadow-inner block resize-none focus:outline-none focus:ring-2 focus:ring-violet-500"
+          calcBtnClass="bg-violet-600 hover:bg-violet-500 shadow-violet-900/30"
           calculate={calculate}
           clear={clear} />
         </div>

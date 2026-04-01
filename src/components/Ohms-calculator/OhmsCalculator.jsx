@@ -111,9 +111,9 @@ const OhmsCalculator = () => {
   }
 
   return (
-    <section className="p-4 md:container md:mx-auto">
-      <div className="flex flex-wrap -mx-2">
-        <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
+    <section>
+      <div className="flex flex-wrap gap-4">
+        <div className="w-full md:w-[48%]">
           <AlchemyInput
             maxLength1="4"
             maxLength2="4"
@@ -123,10 +123,13 @@ const OhmsCalculator = () => {
             handleFormChange={handleFormChange}
             text="Ingrese solo 2 valores" />
         </div>
-        <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
-          <TextArea Class="bg-gradient-to-br from-gray-900 to-gray-700 text-cyan-400 w-full h-full min-h-[12rem] border border-gray-400 font-sans p-4 shadow-lg transition-shadow duration-500 ease-in-out block resize-none focus:outline-none focus:ring-2 focus:ring-gray-500"
+        <div className="w-full md:flex-1">
+          <TextArea
+            Class="bg-slate-900/60 text-cyan-300 w-full h-full min-h-[14rem] border border-cyan-800/30 font-mono text-sm p-4 rounded-lg shadow-inner block resize-none focus:outline-none focus:ring-2 focus:ring-cyan-500"
             result={result}
-            Type="Ley de ohm by Buh!to"
+            Type="Ley de Ohm"
+            headerClass="bg-cyan-900/40 text-cyan-300 border border-cyan-700/30"
+            calcBtnClass="bg-cyan-600 hover:bg-cyan-500 shadow-cyan-900/30"
             calculate={calculate}
             clear={clear} />
         </div>
