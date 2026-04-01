@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/calculadora-alquimia-web/static/css/main.ad266fba.css",
+    "main.js": "/calculadora-alquimia-web/static/js/main.a75ad5b7.js",
+    "static/js/845.9849861d.chunk.js": "/calculadora-alquimia-web/static/js/845.9849861d.chunk.js",
+    "index.html": "/calculadora-alquimia-web/index.html",
+    "main.ad266fba.css.map": "/calculadora-alquimia-web/static/css/main.ad266fba.css.map",
+    "main.a75ad5b7.js.map": "/calculadora-alquimia-web/static/js/main.a75ad5b7.js.map",
+    "845.9849861d.chunk.js.map": "/calculadora-alquimia-web/static/js/845.9849861d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ad266fba.css",
+    "static/js/main.a75ad5b7.js"
+  ]
+}
