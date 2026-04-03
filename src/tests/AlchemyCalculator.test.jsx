@@ -7,7 +7,7 @@ describe('AlchemyCalculator', () => {
     render(<AlchemyCalculator />);
     const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
-    const percentInput = screen.getByLabelText(/%/i);
+    const percentInput = screen.getByPlaceholderText("%");
     fireEvent.change(percentInput, { target: { value: '50' } });
     fireEvent.click(screen.getByText('Agregar'));
     expect(screen.getByText('Arom1')).toBeInTheDocument();
@@ -23,7 +23,7 @@ describe('AlchemyCalculator', () => {
     render(<AlchemyCalculator />);
     const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
-    const percentInput = screen.getByLabelText(/%/i);
+    const percentInput = screen.getByPlaceholderText("%");
     fireEvent.change(percentInput, { target: { value: '50' } });
     fireEvent.click(screen.getByText('Agregar'));
     expect(screen.getByText('Arom1')).toBeInTheDocument();
@@ -40,7 +40,7 @@ describe('AlchemyCalculator', () => {
     render(<AlchemyCalculator />);
     const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: '123' } });
-    const percentInput = screen.getByLabelText(/%/i);
+    const percentInput = screen.getByPlaceholderText("%");
     fireEvent.change(percentInput, { target: { value: '50' } });
     fireEvent.click(screen.getByText('Agregar'));
     expect(screen.queryByText('Arom1')).not.toBeInTheDocument();
@@ -50,7 +50,7 @@ describe('AlchemyCalculator', () => {
     render(<AlchemyCalculator />);
     const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
-    const percentInput = screen.getByLabelText(/%/i);
+    const percentInput = screen.getByPlaceholderText("%");
     fireEvent.change(percentInput, { target: { value: 'abc' } });
     fireEvent.click(screen.getByText('Agregar'));
     expect(screen.queryByText('Arom1')).not.toBeInTheDocument();
@@ -60,7 +60,7 @@ describe('AlchemyCalculator', () => {
     render(<AlchemyCalculator />);
     const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
-    const percentInput = screen.getByLabelText(/%/i);
+    const percentInput = screen.getByPlaceholderText("%");
     fireEvent.change(percentInput, { target: { value: '150' } });
     fireEvent.click(screen.getByText('Agregar'));
     expect(screen.queryByText('Arom1')).not.toBeInTheDocument();
@@ -70,7 +70,7 @@ describe('AlchemyCalculator', () => {
     render(<AlchemyCalculator />);
     const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
-    const percentInput = screen.getByLabelText(/%/i);
+    const percentInput = screen.getByPlaceholderText("%");
     fireEvent.change(percentInput, { target: { value: '-50' } });
     fireEvent.click(screen.getByText('Agregar'));
     expect(screen.queryByText('Arom1')).not.toBeInTheDocument();
@@ -80,7 +80,7 @@ describe('AlchemyCalculator', () => {
     render(<AlchemyCalculator />);
     const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: '' } });
-    const percentInput = screen.getByLabelText(/%/i);
+    const percentInput = screen.getByPlaceholderText("%");
     fireEvent.change(percentInput, { target: { value: '50' } });
     fireEvent.click(screen.getByText('Agregar'));
     expect(screen.queryByText('Arom1')).not.toBeInTheDocument();
@@ -90,7 +90,7 @@ describe('AlchemyCalculator', () => {
     render(<AlchemyCalculator />);
     const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
-    const percentInput = screen.getByLabelText(/%/i);
+    const percentInput = screen.getByPlaceholderText("%");
     fireEvent.change(percentInput, { target: { value: '' } });
     fireEvent.click(screen.getByText('Agregar'));
     expect(screen.queryByText('Arom1')).not.toBeInTheDocument();
@@ -100,7 +100,7 @@ describe('AlchemyCalculator', () => {
     render(<AlchemyCalculator />);
     const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
-    const percentInput = screen.getByLabelText(/%/i);
+    const percentInput = screen.getByPlaceholderText("%");
     fireEvent.change(percentInput, { target: { value: '50.5' } });
     fireEvent.click(screen.getByText('Agregar'));
     expect(screen.getByText('Arom1')).toBeInTheDocument();
@@ -111,13 +111,13 @@ describe('AlchemyCalculator', () => {
     render(<AlchemyCalculator />);
     const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
-    const percentInput = screen.getByLabelText(/%/i);
+    const percentInput = screen.getByPlaceholderText("%");
     fireEvent.change(percentInput, { target: { value: '50' } });
     fireEvent.click(screen.getByText('Agregar'));
 
     const aromInput2 = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput2, { target: { value: 'Arom2' } });
-    const percentInput2 = screen.getByLabelText(/%/i);
+    const percentInput2 = screen.getByPlaceholderText("%");
     fireEvent.change(percentInput2, { target: { value: '30' } });
     fireEvent.click(screen.getByText('Agregar'));
 
@@ -131,7 +131,7 @@ describe('AlchemyCalculator', () => {
     render(<AlchemyCalculator />);
     const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
-    const percentInput = screen.getByLabelText(/%/i);
+    const percentInput = screen.getByPlaceholderText("%");
     fireEvent.change(percentInput, { target: { value: '0' } });
     fireEvent.click(screen.getByText('Agregar'));
     expect(screen.queryByText('Arom1')).not.toBeInTheDocument();
@@ -141,7 +141,7 @@ describe('AlchemyCalculator', () => {
     render(<AlchemyCalculator />);
     const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
-    const percentInput = screen.getByLabelText(/%/i);
+    const percentInput = screen.getByPlaceholderText("%");
     fireEvent.change(percentInput, { target: { value: '50' } });
     fireEvent.click(screen.getByText('Agregar'));
 
@@ -155,7 +155,7 @@ describe('AlchemyCalculator', () => {
     render(<AlchemyCalculator />);
     const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
-    const percentInput = screen.getByLabelText(/%/i);
+    const percentInput = screen.getByPlaceholderText("%");
     fireEvent.change(percentInput, { target: { value: '50' } });
     fireEvent.click(screen.getByText('Agregar'));
 
@@ -169,7 +169,7 @@ describe('AlchemyCalculator', () => {
     render(<AlchemyCalculator />);
     const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
-    const percentInput = screen.getByLabelText(/%/i);
+    const percentInput = screen.getByPlaceholderText("%");
     fireEvent.change(percentInput, { target: { value: '50' } });
     fireEvent.click(screen.getByText('Agregar'));
 
