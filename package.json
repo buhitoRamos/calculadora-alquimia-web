@@ -19,7 +19,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --testMatch \"**/src/tests/**/*.test.[jt]s?(x)\"",
+    "test": "CI=true react-scripts test --testMatch \"**/src/tests/**/*.test.[jt]s?(x)\"",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build -f"
