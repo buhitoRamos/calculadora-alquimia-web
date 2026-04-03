@@ -1,6 +1,5 @@
 import React from "react";
-import PropsTypes from 'prop-types'
-
+import PropTypes from 'prop-types';
 
 const AlchemyInput = ({ form, handleFormChange, text, placeHolder1, placeHolder2, maxLength1, maxLength2 }) => (
   <section className="mb-4">
@@ -59,9 +58,11 @@ const AlchemyInput = ({ form, handleFormChange, text, placeHolder1, placeHolder2
     </div>
   </section>
 
-)
-AlchemyInput.PropsTypes = {
-  handleChange: PropsTypes.func.isRequired,
-  form: PropsTypes.array.isRequired
-}
-export default AlchemyInput```
+);
+
+AlchemyInput.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+  form: PropTypes.array.isRequired
+};
+
+export default AlchemyInput;
