@@ -3,7 +3,6 @@ import PropsTypes from 'prop-types'
 
 
 const AlchemyInput = ({ form, handleFormChange, text, placeHolder1, placeHolder2, maxLength1, maxLength2 }) => (
-
   <section className="mb-4">
     <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 border-b border-slate-700 pb-2.5 mb-4">
       {text}
@@ -65,4 +64,4 @@ AlchemyInput.PropsTypes = {
   handleChange: PropsTypes.func.isRequired,
   form: PropsTypes.array.isRequired
 }
-export default AlchemyInput
+export default AlchemyInput```
