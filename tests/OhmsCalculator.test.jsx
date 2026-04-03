@@ -6,10 +6,11 @@ describe('OhmsCalculator', () => {
   test('renders the component with default values', () => {
     render(<OhmsCalculator />);
     expect(screen.getByText(/Ingrese solo 2 valores/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/ingrese valor/i)).toHaveValue('');
+    expect(screen.getAllByPlaceholderText(/ingrese valor/i)[0]).toHaveValue('');
+    expect(screen.getAllByPlaceholderText(/ingrese valor/i)[1]).toHaveValue('');
   });
 
-  test('calculates amper when volt and ohms are provided', () => {
+  test('calculates amperage when voltage and resistance are provided', () => {
     render(<OhmsCalculator />);
     fireEvent.change(screen.getAllByPlaceholderText(/ingrese valor/i)[0], { target: { value: '12' } });
     fireEvent.change(screen.getAllByPlaceholderText(/ingrese valor/i)[1], { target: { value: '3' } });
@@ -17,7 +18,7 @@ describe('OhmsCalculator', () => {
     expect(screen.getByText(/Amper: 4.00/)).toBeInTheDocument();
   });
 
-  test('calculates ohms when volt and watt are provided', () => {
+  test('calculates resistance when voltage and power are provided', () => {
     render(<OhmsCalculator />);
     fireEvent.change(screen.getAllByPlaceholderText(/ingrese valor/i)[0], { target: { value: '12' } });
     fireEvent.change(screen.getAllByPlaceholderText(/ingrese valor/i)[1], { target: { value: '144' } });
@@ -25,7 +26,7 @@ describe('OhmsCalculator', () => {
     expect(screen.getByText(/Ohms: 3.00/)).toBeInTheDocument();
   });
 
-  test('calculates watt when amp and ohms are provided', () => {
+  test('calculates power when current and resistance are provided', () => {
     render(<OhmsCalculator />);
     fireEvent.change(screen.getAllByPlaceholderText(/ingrese valor/i)[2], { target: { value: '3' } });
     fireEvent.change(screen.getAllByPlaceholderText(/ingrese valor/i)[3], { target: { value: '10' } });
@@ -33,7 +34,7 @@ describe('OhmsCalculator', () => {
     expect(screen.getByText(/Watt: 30.00/)).toBeInTheDocument();
   });
 
-  test('calculates volt when amp and watt are provided', () => {
+  test('calculates voltage when current and resistance are provided', () => {
     render(<OhmsCalculator />);
     fireEvent.change(screen.getAllByPlaceholderText(/ingrese valor/i)[1], { target: { value: '144' } });
     fireEvent.change(screen.getAllByPlaceholderText(/ingrese valor/i)[3], { target: { value: '10' } });
@@ -55,6 +56,7 @@ describe('OhmsCalculator', () => {
     expect(screen.getByText(/Amper: 4.00/)).toBeInTheDocument();
     fireEvent.click(screen.getByText(/Limpiar/i));
     expect(screen.getAllByPlaceholderText(/ingrese valor/i)[0]).toHaveValue('');
+    expect(screen.getAllByPlaceholderText(/ingrese valor/i)[1]).toHaveValue('');
     expect(screen.getByText(/Se denbe ingresar solo 2 valores para calcular el resto/)).toBeInTheDocument();
   });
 });
