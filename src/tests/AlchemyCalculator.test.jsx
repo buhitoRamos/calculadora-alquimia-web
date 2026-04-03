@@ -5,7 +5,7 @@ import AlchemyCalculator from '../components/Alchemy-calculator/AlchemyCalculato
 describe('AlchemyCalculator', () => {
   test('should add aroms and calculate total ML', () => {
     render(<AlchemyCalculator />);
-    const aromInput = screen.getByLabelText(/nombre del aroma/i);
+    const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
     const percentInput = screen.getByLabelText(/%/i);
     fireEvent.change(percentInput, { target: { value: '50' } });
@@ -21,7 +21,7 @@ describe('AlchemyCalculator', () => {
 
   test('should handle clear button', () => {
     render(<AlchemyCalculator />);
-    const aromInput = screen.getByLabelText(/nombre del aroma/i);
+    const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
     const percentInput = screen.getByLabelText(/%/i);
     fireEvent.change(percentInput, { target: { value: '50' } });
@@ -38,7 +38,7 @@ describe('AlchemyCalculator', () => {
 
   test('should handle invalid input for arom name', () => {
     render(<AlchemyCalculator />);
-    const aromInput = screen.getByLabelText(/nombre del aroma/i);
+    const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: '123' } });
     const percentInput = screen.getByLabelText(/%/i);
     fireEvent.change(percentInput, { target: { value: '50' } });
@@ -48,7 +48,7 @@ describe('AlchemyCalculator', () => {
 
   test('should handle invalid input for percentage', () => {
     render(<AlchemyCalculator />);
-    const aromInput = screen.getByLabelText(/nombre del aroma/i);
+    const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
     const percentInput = screen.getByLabelText(/%/i);
     fireEvent.change(percentInput, { target: { value: 'abc' } });
@@ -58,7 +58,7 @@ describe('AlchemyCalculator', () => {
 
   test('should handle percentage greater than 100', () => {
     render(<AlchemyCalculator />);
-    const aromInput = screen.getByLabelText(/nombre del aroma/i);
+    const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
     const percentInput = screen.getByLabelText(/%/i);
     fireEvent.change(percentInput, { target: { value: '150' } });
@@ -68,7 +68,7 @@ describe('AlchemyCalculator', () => {
 
   test('should handle percentage less than 0', () => {
     render(<AlchemyCalculator />);
-    const aromInput = screen.getByLabelText(/nombre del aroma/i);
+    const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
     const percentInput = screen.getByLabelText(/%/i);
     fireEvent.change(percentInput, { target: { value: '-50' } });
@@ -78,7 +78,7 @@ describe('AlchemyCalculator', () => {
 
   test('should handle empty input for arom name', () => {
     render(<AlchemyCalculator />);
-    const aromInput = screen.getByLabelText(/nombre del aroma/i);
+    const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: '' } });
     const percentInput = screen.getByLabelText(/%/i);
     fireEvent.change(percentInput, { target: { value: '50' } });
@@ -88,7 +88,7 @@ describe('AlchemyCalculator', () => {
 
   test('should handle empty input for percentage', () => {
     render(<AlchemyCalculator />);
-    const aromInput = screen.getByLabelText(/nombre del aroma/i);
+    const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
     const percentInput = screen.getByLabelText(/%/i);
     fireEvent.change(percentInput, { target: { value: '' } });
@@ -98,7 +98,7 @@ describe('AlchemyCalculator', () => {
 
   test('should handle decimal input for percentage', () => {
     render(<AlchemyCalculator />);
-    const aromInput = screen.getByLabelText(/nombre del aroma/i);
+    const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
     const percentInput = screen.getByLabelText(/%/i);
     fireEvent.change(percentInput, { target: { value: '50.5' } });
@@ -109,13 +109,13 @@ describe('AlchemyCalculator', () => {
 
   test('should handle multiple aroms and calculate total ML', () => {
     render(<AlchemyCalculator />);
-    const aromInput = screen.getByLabelText(/nombre del aroma/i);
+    const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
     const percentInput = screen.getByLabelText(/%/i);
     fireEvent.change(percentInput, { target: { value: '50' } });
     fireEvent.click(screen.getByText('Agregar'));
 
-    const aromInput2 = screen.getByLabelText(/nombre del aroma/i);
+    const aromInput2 = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput2, { target: { value: 'Arom2' } });
     const percentInput2 = screen.getByLabelText(/%/i);
     fireEvent.change(percentInput2, { target: { value: '30' } });
@@ -129,7 +129,7 @@ describe('AlchemyCalculator', () => {
 
   test('should handle zero input for percentage', () => {
     render(<AlchemyCalculator />);
-    const aromInput = screen.getByLabelText(/nombre del aroma/i);
+    const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
     const percentInput = screen.getByLabelText(/%/i);
     fireEvent.change(percentInput, { target: { value: '0' } });
@@ -139,7 +139,7 @@ describe('AlchemyCalculator', () => {
 
   test('should handle zero input for total ML', () => {
     render(<AlchemyCalculator />);
-    const aromInput = screen.getByLabelText(/nombre del aroma/i);
+    const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
     const percentInput = screen.getByLabelText(/%/i);
     fireEvent.change(percentInput, { target: { value: '50' } });
@@ -153,7 +153,7 @@ describe('AlchemyCalculator', () => {
 
   test('should handle negative input for total ML', () => {
     render(<AlchemyCalculator />);
-    const aromInput = screen.getByLabelText(/nombre del aroma/i);
+    const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
     const percentInput = screen.getByLabelText(/%/i);
     fireEvent.change(percentInput, { target: { value: '50' } });
@@ -167,7 +167,7 @@ describe('AlchemyCalculator', () => {
 
   test('should handle decimal input for total ML', () => {
     render(<AlchemyCalculator />);
-    const aromInput = screen.getByLabelText(/nombre del aroma/i);
+    const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: 'Arom1' } });
     const percentInput = screen.getByLabelText(/%/i);
     fireEvent.change(percentInput, { target: { value: '50' } });
