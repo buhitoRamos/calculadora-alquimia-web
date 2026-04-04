@@ -135,25 +135,13 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(aromInput, { target: { value: "Arom1" } });
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "abc" } }); // This input will be treated as NaN
-    const totalMLInput = screen.getByPlaceholderText('ml');
+    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
     // "abc" will not be displayed, as type="number" filters it
     expect(screen.queryByDisplayValue("abc")).not.toBeInTheDocument();
     expect(percentInput).toHaveValue(""); // Expect empty string for non-numeric input in number field
-    
-    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
-    fireEvent.change(totalMLInput, { target: { value: "100" } });
-    fireEvent.click(screen.getByText("Calcular"));
-
-    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
-    fireEvent.change(totalMLInput, { target: { value: "100" } });
-    fireEvent.click(screen.getByText("Calcular"));
-
-    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
-    fireEvent.change(totalMLInput, { target: { value: "100" } });
-    fireEvent.click(screen.getByText("Calcular"));
 
     const expectedText = `ML TOTAL: 100.00ml 
  GLICERINA: 0.00ml 
@@ -205,10 +193,6 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(percentInput, { target: { value: "-50" } });
     expect(screen.getByDisplayValue("-50")).toBeVisible();
 
-    const totalMLInput = screen.getByPlaceholderText('ml');
-    fireEvent.change(totalMLInput, { target: { value: "100" } });
-    fireEvent.click(screen.getByText("Calcular"));
-
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
@@ -236,10 +220,6 @@ describe("AlchemyCalculator", () => {
     expect(aromInput).toHaveValue(""); // Name is empty
     expect(screen.getByDisplayValue("50")).toBeVisible();
     
-    const totalMLInput = screen.getByPlaceholderText('ml');
-    fireEvent.change(totalMLInput, { target: { value: "100" } });
-    fireEvent.click(screen.getByText("Calcular"));
-
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
@@ -266,7 +246,7 @@ describe("AlchemyCalculator", () => {
 
     expect(percentInput).toHaveValue(""); // Percentage is empty
     
-    const totalMLInput = screen.getByPlaceholderText('ml');
+    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
