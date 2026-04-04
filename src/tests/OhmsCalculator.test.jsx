@@ -1,8 +1,18 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import OhmsCalculator from '../components/Ohms-calculator/OhmsCalculator';
+import { confirmAlert } from 'react-confirm-alert';
+
+// Mock react-confirm-alert
+jest.mock('react-confirm-alert', () => ({
+  confirmAlert: jest.fn(),
+}));
 
 describe('OhmsCalculator', () => {
+  beforeEach(() => {
+    confirmAlert.mockClear(); // Clear mock calls before each test
+  });
+
   test('should calculate amperage when voltage and ohms are provided', () => {
     render(<OhmsCalculator />);
     const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });

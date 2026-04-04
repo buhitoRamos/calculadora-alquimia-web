@@ -51,7 +51,7 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(mockSetResult).not.toHaveBeenCalled();
     expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -107,7 +107,7 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(mockSetResult).not.toHaveBeenCalled();
     expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -128,7 +128,7 @@ describe("AlchemyCalculator", () => {
     expect(screen.queryByDisplayValue("abc")).not.toBeInTheDocument();
     expect(percentInput).toHaveDisplayValue(""); // Expect empty string for non-numeric input in number field
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(mockSetResult).not.toHaveBeenCalled();
     expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -148,7 +148,7 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(mockSetResult).not.toHaveBeenCalled();
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA, exits early
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -167,7 +167,7 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(mockSetResult).not.toHaveBeenCalled();
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA, exits early
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -188,7 +188,7 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(mockSetResult).not.toHaveBeenCalled();
     expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -208,7 +208,7 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(mockSetResult).not.toHaveBeenCalled();
     expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -228,7 +228,7 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(mockSetResult).not.toHaveBeenCalled();
     expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -258,7 +258,7 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(mockSetResult).not.toHaveBeenCalled();
     expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -278,7 +278,7 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(mockSetResult).not.toHaveBeenCalled();
     expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -342,7 +342,7 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "12.5" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(mockSetResult).not.toHaveBeenCalled();
     expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -370,7 +370,7 @@ describe("AlchemyCalculator", () => {
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
-    expect(mockSetResult).toHaveBeenCalledWith(""); // Expect empty string due to early return
+    expect(mockSetResult).not.toHaveBeenCalled(); // Expect setResult not to be called due to early return without explicit result clear
   });
 
 
@@ -395,7 +395,7 @@ describe("AlchemyCalculator", () => {
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
-    expect(mockSetResult).toHaveBeenCalledWith(""); // Expect empty result due to early return
+    expect(mockSetResult).not.toHaveBeenCalled(); // Expect setResult not to be called due to early return without explicit result clear
   });
 
   test("should not allow PROPILEN input to exceed maxLength", () => {
