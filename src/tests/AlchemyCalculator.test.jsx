@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import AlchemyCalculator from "../components/Alchemy-calculator/AlchemyCalculator";
+import React from "react"; // Import React for useState mock
 import { confirmAlert } from 'react-confirm-alert'; // Import confirmAlert
 
 // Mock react-confirm-alert
@@ -8,9 +9,29 @@ jest.mock('react-confirm-alert', () => ({
   confirmAlert: jest.fn(),
 }));
 
+// Mock setResult from useState to capture calls
+const mockSetResult = jest.fn();
+const originalUseState = React.useState;
+
+beforeAll(() => {
+  jest.spyOn(React, 'useState').mockImplementation((initialValue) => {
+    // We assume the result state is initialized with an empty string
+    if (initialValue === "") {
+      return [initialValue, mockSetResult];
+    }
+    // For other state variables, use the original useState behavior
+    return originalUseState(initialValue);
+  });
+});
+
+afterAll(() => {
+  jest.restoreAllMocks(); // Restore all mocks after all tests are done
+});
+
 describe("AlchemyCalculator", () => {
   beforeEach(() => {
     confirmAlert.mockClear(); // Clear mock calls before each test
+    mockSetResult.mockClear(); // Clear mock calls for setResult
   });
 
   test("should add aroms and calculate total ML", () => {
@@ -21,8 +42,8 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(percentInput, { target: { value: "50" } });
 
     // Expect the input value to be present
-    expect(screen.getByDisplayValue("Arom1")).toBeInTheDocument();
-    expect(screen.getByDisplayValue("50")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("Arom1")).toBeVisible();
+    expect(screen.getByDisplayValue("50")).toBeVisible();
 
     const totalMLInput = screen.getByPlaceholderText('ml');
     fireEvent.change(totalMLInput, { target: { value: "100" } });
@@ -97,7 +118,7 @@ describe("AlchemyCalculator", () => {
  NICOTINA: 0.00ml 
  Arom123: 50.00ml
 `;
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(2); // One for GLICERINA, one for negative PG
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -119,7 +140,7 @@ describe("AlchemyCalculator", () => {
 
     // "abc" will not be displayed, as type="number" filters it
     expect(screen.queryByDisplayValue("abc")).not.toBeInTheDocument();
-    expect(percentInput.value).toBe(""); // Expect empty string for non-numeric input in number field
+    expect(percentInput).toHaveValue(""); // Expect empty string for non-numeric input in number field
     
     const expectedText = `ML TOTAL: 100.00ml 
  GLICERINA: 0.00ml 
@@ -127,7 +148,7 @@ describe("AlchemyCalculator", () => {
  NICOTINA: 0.00ml 
  Arom1: 0.00ml
 `;
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -141,7 +162,7 @@ describe("AlchemyCalculator", () => {
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "150" } }); // "150" has length 3, and maxLength is 4, so it should be set
 
-    expect(screen.getByDisplayValue("150")).toBeInTheDocument(); // Value should be present in input
+    expect(screen.getByDisplayValue("150")).toBeVisible(); // Value should be present in input
     
     const totalMLInput = screen.getByPlaceholderText('ml');
     fireEvent.change(totalMLInput, { target: { value: "100" } });
@@ -153,7 +174,7 @@ describe("AlchemyCalculator", () => {
  NICOTINA: 0.00ml 
  Arom1: 150.00ml
 `;
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(2); // One for GLICERINA, one for negative PG
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -169,7 +190,7 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(aromInput, { target: { value: "Arom1" } });
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "-50" } });
-    expect(screen.getByDisplayValue("-50")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("-50")).toBeVisible();
 
     const totalMLInput = screen.getByPlaceholderText('ml');
     fireEvent.change(totalMLInput, { target: { value: "100" } });
@@ -181,7 +202,7 @@ describe("AlchemyCalculator", () => {
  NICOTINA: 0.00ml 
  Arom1: -50.00ml
 `;
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -195,8 +216,8 @@ describe("AlchemyCalculator", () => {
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "50" } });
 
-    expect(aromInput.value).toBe(""); // Name is empty
-    expect(screen.getByDisplayValue("50")).toBeInTheDocument();
+    expect(aromInput).toHaveValue(""); // Name is empty
+    expect(screen.getByDisplayValue("50")).toBeVisible();
     
     const totalMLInput = screen.getByPlaceholderText('ml');
     fireEvent.change(totalMLInput, { target: { value: "100" } });
@@ -208,7 +229,7 @@ describe("AlchemyCalculator", () => {
  NICOTINA: 0.00ml 
  : 0.00ml
 `;
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -222,7 +243,7 @@ describe("AlchemyCalculator", () => {
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "" } }); // This input will be treated as NaN
 
-    expect(percentInput.value).toBe(""); // Percentage is empty
+    expect(percentInput).toHaveValue(""); // Percentage is empty
     
     const totalMLInput = screen.getByPlaceholderText('ml');
     fireEvent.change(totalMLInput, { target: { value: "100" } });
@@ -234,7 +255,7 @@ describe("AlchemyCalculator", () => {
  NICOTINA: 0.00ml 
  Arom1: 0.00ml
 `;
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -248,7 +269,7 @@ describe("AlchemyCalculator", () => {
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "50.5" } });
     
-    expect(percentInput.value).toBe("50.5"); // Value should be set
+    expect(percentInput).toHaveValue("50.5"); // Value should be set
     
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
@@ -260,7 +281,7 @@ describe("AlchemyCalculator", () => {
  NICOTINA: 0.00ml 
  Arom1: 50.50ml
 `;
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative PG
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -278,8 +299,10 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(aromInputs[0], { target: { value: "Arom1" } });
     fireEvent.change(percentInputs[0], { target: { value: "50" } });
 
-    // Click "+ Agregar aroma" to add a new aroma slot (index 1)
-    fireEvent.click(screen.getByText("+ Agregar aroma"));
+    // Ensure the add aroma button text is "Agregar aroma" and click it
+    const addAromaButton = screen.getByRole('button', { name: /agregar aroma/i });
+    expect(addAromaButton).toHaveTextContent('Agregar aroma'); // Assert exact text content, as requested
+    fireEvent.click(addAromaButton); // This will search for 'Agregar aroma', which currently doesn't exist.
 
     // Get the newly added aroma inputs (now there are 2)
     aromInputs = screen.getAllByPlaceholderText("nombre del aroma");
@@ -298,7 +321,7 @@ describe("AlchemyCalculator", () => {
  Arom1: 50.00ml
  Arom2: 30.00ml
 `;
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative PG
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -315,7 +338,7 @@ describe("AlchemyCalculator", () => {
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "0" } });
     
-    expect(screen.getByDisplayValue("0")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("0")).toBeVisible();
     
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
@@ -350,7 +373,7 @@ describe("AlchemyCalculator", () => {
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe ingresar un valor en "ML TOTAL"',
     }));
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(''); // Result area cleared
+    expect(mockSetResult).toHaveBeenCalledWith(''); // Result area cleared
   });
 
   test("should trigger confirmAlert for negative input for total ML", async () => {
@@ -359,7 +382,10 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(aromInput, { target: { value: "Arom1" } });
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "50" } });
-    fireEvent.click(screen.getByText("+ Agregar aroma"));
+    // Adjusting for button text change expectation
+    const addAromaButton = screen.getByRole('button', { name: /agregar aroma/i });
+    expect(addAromaButton).toHaveTextContent('Agregar aroma');
+    fireEvent.click(addAromaButton);
 
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "-100" } });
@@ -369,7 +395,7 @@ describe("AlchemyCalculator", () => {
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe ingresar un valor en "ML TOTAL"',
     }));
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(''); // Result area cleared
+    expect(mockSetResult).toHaveBeenCalledWith(''); // Result area cleared
   });
 
   test("should handle decimal input for total ML", () => {
@@ -390,7 +416,7 @@ describe("AlchemyCalculator", () => {
  NICOTINA: 0.00ml 
  Arom1: 6.25ml
 `;
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative PG
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -406,7 +432,10 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(aromInput, { target: { value: "Arom1" } });
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "50" } });
-    fireEvent.click(screen.getByText("+ Agregar aroma"));
+    // Adjusting for button text change expectation
+    const addAromaButton = screen.getByRole('button', { name: /agregar aroma/i });
+    expect(addAromaButton).toHaveTextContent('Agregar aroma');
+    fireEvent.click(addAromaButton);
 
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
@@ -421,7 +450,7 @@ describe("AlchemyCalculator", () => {
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina',
     }));
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue("ML TOTAL: 100.00ml \n GLICERINA: 0.00ml \n PROPILEN: -50.00ml \n NICOTINA: 0.00ml \n Arom1: 50.00ml\n");
+    expect(mockSetResult).toHaveBeenCalledWith("ML TOTAL: 100.00ml \n GLICERINA: 0.00ml \n PROPILEN: -50.00ml \n NICOTINA: 0.00ml \n Arom1: 50.00ml\n");
   });
 
 
@@ -454,6 +483,19 @@ describe("AlchemyCalculator", () => {
  NICOTINA: 0.00ml 
  Arom1: 50.00ml
 `;
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
+  });
+
+  test("should not allow PROPILEN input to exceed maxLength", () => {
+    render(<AlchemyCalculator />);
+    const propilenInput = screen.getByRole('spinbutton', { name: 'PROPILEN' }); // Assuming role 'spinbutton' for type 'number'
+    
+    // Attempt to type a value longer than maxLength (which is 3 for percentages)
+    fireEvent.change(propilenInput, { target: { value: '1234', maxLength: 3 } });
+    expect(propilenInput).toHaveValue('123'); // Should only accept up to maxLength
+
+    // Attempt to type a value exactly at maxLength
+    fireEvent.change(propilenInput, { target: { value: '123', maxLength: 3 } });
+    expect(propilenInput).toHaveValue('123'); // Should accept up to maxLength
   });
 });

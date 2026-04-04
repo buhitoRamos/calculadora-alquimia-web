@@ -42,9 +42,9 @@ describe('OhmsCalculator', () => {
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(expect.stringContaining('Amper: 2.00'));
     fireEvent.click(screen.getByText('Reset')); // Changed 'Limpiar' to 'Reset'
-    expect(voltInput.value).toBe('');
-    expect(ohmsInput.value).toBe('');
-    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' }).value).toBe(''); // Clear result text area
+    expect(voltInput).toHaveValue('');
+    expect(ohmsInput).toHaveValue('');
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(''); // Clear result text area
   });
 
   test('should handle invalid input for voltage', () => {
