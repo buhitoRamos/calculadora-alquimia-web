@@ -53,7 +53,7 @@ describe("AlchemyCalculator", () => {
 
     const expectedText = `ML TOTAL: 100.00ml 
  GLICERINA: 0.00ml 
- PROPILEN: 0.00ml 
+ PROPILEN: 50.00ml 
  NICOTINA: 0.00ml 
  Arom1: 50.00ml
 `;
@@ -85,7 +85,7 @@ describe("AlchemyCalculator", () => {
     expect(screen.getByDisplayValue("Arom2")).toBeVisible();
     expect(screen.getByDisplayValue("30")).toBeVisible();
 
-    fireEvent.click(screen.getByText("Reset"));
+    fireEvent.click(screen.getByText("Limpiar")); // Changed 'Reset' to 'Limpiar'
 
     // After clear, there should be no aroma inputs by default
     const clearedAromInputs = screen.queryAllByPlaceholderText("nombre del aroma");
