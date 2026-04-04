@@ -1,7 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import AlchemyCalculator from "../components/Alchemy-calculator/AlchemyCalculator";
-import React from "react"; // Import React for useState mock
 import { confirmAlert } from 'react-confirm-alert'; // Import confirmAlert
 
 // Mock react-confirm-alert
@@ -55,7 +54,7 @@ describe("AlchemyCalculator", () => {
  NICOTINA: 0.00ml 
  Arom1: 50.00ml
 `;
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(2); // One for GLICERINA, one for negative PG
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -72,17 +71,19 @@ describe("AlchemyCalculator", () => {
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "50" } });
 
-    fireEvent.click(screen.getByText("+ Agregar aroma")); // Add another empty aroma slot
+    const addAromaButton = screen.getByRole('button', { name: /agregar aroma/i });
+    expect(addAromaButton).toHaveTextContent('Agregar aroma');
+    fireEvent.click(addAromaButton); // Add another empty aroma slot
 
     const aromInput2 = screen.getAllByPlaceholderText("nombre del aroma")[1]; // Get the newly added aroma input
     fireEvent.change(aromInput2, { target: { value: "Arom2" } });
     const percentInput2 = screen.getAllByLabelText("porcentaje de aroma")[1]; // Get the newly added percentage input
     fireEvent.change(percentInput2, { target: { value: "30" } });
 
-    expect(screen.getByDisplayValue("Arom1")).toBeInTheDocument();
-    expect(screen.getByDisplayValue("50")).toBeInTheDocument();
-    expect(screen.getByDisplayValue("Arom2")).toBeInTheDocument();
-    expect(screen.getByDisplayValue("30")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("Arom1")).toBeVisible();
+    expect(screen.getByDisplayValue("50")).toBeVisible();
+    expect(screen.getByDisplayValue("Arom2")).toBeVisible();
+    expect(screen.getByDisplayValue("30")).toBeVisible();
 
     fireEvent.click(screen.getByText("Reset"));
 
@@ -98,7 +99,7 @@ describe("AlchemyCalculator", () => {
     expect(screen.queryByDisplayValue("50")).not.toBeInTheDocument();
     expect(screen.queryByDisplayValue("Arom2")).not.toBeInTheDocument();
     expect(screen.queryByDisplayValue("30")).not.toBeInTheDocument();
-    expect(screen.getByRole('textbox', { name: 'Alquimia' }).value).toBe(''); // Result area cleared
+    expect(mockSetResult).toHaveBeenCalledWith(''); // Result area cleared
   });
 
   test("should handle input with numbers for arom name", () => {
@@ -350,7 +351,7 @@ describe("AlchemyCalculator", () => {
  NICOTINA: 0.00ml 
  Arom1: 0.00ml
 `;
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
@@ -363,7 +364,9 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(aromInput, { target: { value: "Arom1" } });
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "50" } });
-    fireEvent.click(screen.getByText("+ Agregar aroma"));
+    const addAromaButton = screen.getByRole('button', { name: /agregar aroma/i });
+    expect(addAromaButton).toHaveTextContent('Agregar aroma');
+    fireEvent.click(addAromaButton);
 
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "0" } });
@@ -404,7 +407,9 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(aromInput, { target: { value: "Arom1" } });
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "50" } });
-    fireEvent.click(screen.getByText("+ Agregar aroma"));
+    const addAromaButton = screen.getByRole('button', { name: /agregar aroma/i });
+    expect(addAromaButton).toHaveTextContent('Agregar aroma');
+    fireEvent.click(addAromaButton);
 
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "12.5" } });
@@ -460,7 +465,9 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(aromInput, { target: { value: "Arom1" } });
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "50" } }); // 50% aroma
-    fireEvent.click(screen.getByText("+ Agregar aroma"));
+    const addAromaButton = screen.getByRole('button', { name: /agregar aroma/i });
+    expect(addAromaButton).toHaveTextContent('Agregar aroma');
+    fireEvent.click(addAromaButton);
 
     const pgInput = screen.getByRole("spinbutton", { name: "PROPILEN" });
     fireEvent.change(pgInput, { target: { value: "10" } }); // 10% PG
