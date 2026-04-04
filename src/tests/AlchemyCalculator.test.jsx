@@ -43,8 +43,6 @@ describe("AlchemyCalculator", () => {
 
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
-    fireEvent.click(screen.getByText("Calcular"));
-
     const glycerinInput = screen.getByRole("spinbutton", { name: "GLICERINA" });
     fireEvent.change(glycerinInput, { target: { value: "70" } }); // Add glycerin input
 
