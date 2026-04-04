@@ -7,7 +7,7 @@ const TextArea = ({ result, calculate, clear, Class, Type, headerClass, calcBtnC
     <div className={`text-center text-xs font-semibold uppercase tracking-widest p-2.5 rounded-lg mb-3 ${headerClass}`}>
       {Type}
     </div>
-    <textarea className={Class} defaultValue={result} />
+    <textarea className={Class} defaultValue={result} aria-label={Type} />
     <div className="flex gap-2 mt-3">
       <button type="button"
         className={`flex-1 text-white font-semibold py-2.5 px-4 rounded-lg text-sm transition-all duration-200 shadow-lg ${calcBtnClass}`}

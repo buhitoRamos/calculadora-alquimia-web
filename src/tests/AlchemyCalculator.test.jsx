@@ -63,11 +63,11 @@ describe("AlchemyCalculator", () => {
     expect(screen.getByDisplayValue("Arom2")).toBeInTheDocument();
     expect(screen.getByDisplayValue("30")).toBeInTheDocument();
 
-    fireEvent.click(screen.getByText("Limpiar"));
+    fireEvent.click(screen.getByText("Reset"));
 
     // After clear, there should be one empty aroma input left by default
-    const clearedAromInputs = screen.getAllByPlaceholderText("nombre del aroma");
-    const clearedPercentInputs = screen.getAllByLabelText("porcentaje de aroma");
+    const clearedAromInputs = screen.queryAllByPlaceholderText("nombre del aroma");
+    const clearedPercentInputs = screen.queryAllByLabelText("porcentaje de aroma");
 
     expect(clearedAromInputs.length).toBe(0); // No aroma rows remain after clear
     expect(clearedPercentInputs.length).toBe(0);

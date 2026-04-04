@@ -14,7 +14,7 @@ const AlchemyInput = ({ form, handleFormChange, text, placeHolder1, placeHolder2
         <input type="number"
           className="flex-1 px-3 py-2.5 bg-slate-900/50 border border-slate-600 border-l-0 rounded-r-lg text-sm text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
           placeholder={placeHolder1} id={form[0].name}
-          aria-describedby="TOTAL ML"
+          aria-label={form[0].name}
           maxLength={maxLength1}
           value={form[0].value}
           onChange={handleFormChange} />
@@ -26,7 +26,7 @@ const AlchemyInput = ({ form, handleFormChange, text, placeHolder1, placeHolder2
         <input type="number"
           className="flex-1 px-3 py-2.5 bg-slate-900/50 border border-slate-600 border-l-0 rounded-r-lg text-sm text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
           placeholder={placeHolder2} id={form[1].name}
-          aria-describedby="glicerina"
+          aria-label={form[1].name}
           maxLength={maxLength2}
           value={form[1].value}
           onChange={handleFormChange} />
@@ -38,7 +38,7 @@ const AlchemyInput = ({ form, handleFormChange, text, placeHolder1, placeHolder2
         <input type="number"
           className="flex-1 px-3 py-2.5 bg-slate-900/50 border border-slate-600 border-l-0 rounded-r-lg text-sm text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
           placeholder={placeHolder2} id={form[2].name}
-          aria-describedby="propilenglicol"
+          aria-label={form[2].name}
           maxLength={maxLength2}
           value={form[2].value}
           onChange={handleFormChange} />
@@ -50,7 +50,7 @@ const AlchemyInput = ({ form, handleFormChange, text, placeHolder1, placeHolder2
         <input type="number"
           className="flex-1 px-3 py-2.5 bg-slate-900/50 border border-slate-600 border-l-0 rounded-r-lg text-sm text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
           placeholder={placeHolder2} id={form[3].name}
-          aria-describedby="nicotina"
+          aria-label={form[3].name}
           maxLength={maxLength2}
           value={form[3].value}
           onChange={handleFormChange} />
