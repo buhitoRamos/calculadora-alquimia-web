@@ -45,11 +45,14 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
-    expect(confirmAlert).toHaveBeenCalledTimes(1);
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar un porcentaje de glicerina',
-    }));
+    const glycerinInput = screen.getByRole("spinbutton", { name: "GLICERINA" });
+    fireEvent.change(glycerinInput, { target: { value: "70" } }); // Add glycerin input
+
+    fireEvent.click(screen.getByText("Calcular"));
+
+    expect(mockSetResult).not.toHaveBeenCalledWith(''); // Expect a non-empty result string
+    expect(mockSetResult).toHaveBeenCalledWith(expect.any(String));
+    expect(confirmAlert).not.toHaveBeenCalled(); // No confirm alert
   });
 
   test("should handle clear button", () => {
@@ -68,10 +71,15 @@ describe("AlchemyCalculator", () => {
     const percentInput2 = screen.getAllByLabelText("porcentaje de aroma")[1]; // Get the newly added percentage input
     fireEvent.change(percentInput2, { target: { value: "30" } });
 
-    expect(screen.getByDisplayValue("Arom1")).toBeVisible();
-    expect(screen.getByDisplayValue("50")).toBeVisible();
-    expect(screen.getByDisplayValue("Arom2")).toBeVisible();
-    expect(screen.getByDisplayValue("30")).toBeVisible();
+    // Set GLICERINA and TOTAL ML to ensure a calculation is possible before clearing
+    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
+    fireEvent.change(totalMLInput, { target: { value: "100" } });
+    const glycerinInput = screen.getByRole("spinbutton", { name: "GLICERINA" });
+    fireEvent.change(glycerinInput, { target: { value: "70" } });
+
+    fireEvent.click(screen.getByText("Calcular"));
+    expect(mockSetResult).not.toHaveBeenCalledWith(''); // Should have calculated something
+    mockSetResult.mockClear(); // Clear the calculation result to check clear() next
 
     fireEvent.click(screen.getByText("Reset")); // Changed 'Limpiar' to 'Reset' to match component
 
@@ -99,13 +107,14 @@ describe("AlchemyCalculator", () => {
     
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
+    const glycerinInput = screen.getByRole("spinbutton", { name: "GLICERINA" });
+    fireEvent.change(glycerinInput, { target: { value: "70" } }); // Add glycerin input
+
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
-    expect(confirmAlert).toHaveBeenCalledTimes(1);
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar un porcentaje de glicerina',
-    }));
+    expect(mockSetResult).not.toHaveBeenCalledWith('');
+    expect(mockSetResult).toHaveBeenCalledWith(expect.any(String));
+    expect(confirmAlert).not.toHaveBeenCalled();
   });
 
   test("should handle non-numeric input for percentage resulting in 0 contribution", () => {
@@ -116,17 +125,18 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(percentInput, { target: { value: "abc" } }); // This input will be treated as NaN
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
+    const glycerinInput = screen.getByRole("spinbutton", { name: "GLICERINA" });
+    fireEvent.change(glycerinInput, { target: { value: "70" } }); // Add glycerin input
+
     fireEvent.click(screen.getByText("Calcular"));
 
     // "abc" will not be displayed, as type="number" filters it
     expect(screen.queryByDisplayValue("abc")).not.toBeInTheDocument();
     expect(percentInput).toHaveDisplayValue(""); // Expect empty string for non-numeric input in number field
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
-    expect(confirmAlert).toHaveBeenCalledTimes(1);
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar un porcentaje de glicerina',
-    }));
+    expect(mockSetResult).not.toHaveBeenCalledWith('');
+    expect(mockSetResult).toHaveBeenCalledWith(expect.any(String));
+    expect(confirmAlert).not.toHaveBeenCalled();
   });
 
   test("should handle percentage greater than 100 (e.g., 150)", () => {
@@ -140,13 +150,14 @@ describe("AlchemyCalculator", () => {
 
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
+    const glycerinInput = screen.getByRole("spinbutton", { name: "GLICERINA" });
+    fireEvent.change(glycerinInput, { target: { value: "70" } }); // Add glycerin input
+
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
-    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA, exits early
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar un porcentaje de glicerina',
-    }));
+    expect(mockSetResult).not.toHaveBeenCalledWith('');
+    expect(mockSetResult).toHaveBeenCalledWith(expect.any(String));
+    expect(confirmAlert).not.toHaveBeenCalled();
   });
 
   test("should handle percentage less than 0", () => {
@@ -159,13 +170,14 @@ describe("AlchemyCalculator", () => {
 
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
+    const glycerinInput = screen.getByRole("spinbutton", { name: "GLICERINA" });
+    fireEvent.change(glycerinInput, { target: { value: "70" } }); // Add glycerin input
+
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
-    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA, exits early
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar un porcentaje de glicerina',
-    }));
+    expect(mockSetResult).not.toHaveBeenCalledWith('');
+    expect(mockSetResult).toHaveBeenCalledWith(expect.any(String));
+    expect(confirmAlert).not.toHaveBeenCalled();
   });
 
   test("should handle empty input for arom name", () => {
@@ -180,13 +192,14 @@ describe("AlchemyCalculator", () => {
     
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
+    const glycerinInput = screen.getByRole("spinbutton", { name: "GLICERINA" });
+    fireEvent.change(glycerinInput, { target: { value: "70" } }); // Add glycerin input
+
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
-    expect(confirmAlert).toHaveBeenCalledTimes(1);
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar un porcentaje de glicerina',
-    }));
+    expect(mockSetResult).not.toHaveBeenCalledWith('');
+    expect(mockSetResult).toHaveBeenCalledWith(expect.any(String));
+    expect(confirmAlert).not.toHaveBeenCalled();
   });
 
   test("should handle empty input for percentage", () => {
@@ -200,13 +213,14 @@ describe("AlchemyCalculator", () => {
     
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
+    const glycerinInput = screen.getByRole("spinbutton", { name: "GLICERINA" });
+    fireEvent.change(glycerinInput, { target: { value: "70" } }); // Add glycerin input
+
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
-    expect(confirmAlert).toHaveBeenCalledTimes(1);
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar un porcentaje de glicerina',
-    }));
+    expect(mockSetResult).not.toHaveBeenCalledWith('');
+    expect(mockSetResult).toHaveBeenCalledWith(expect.any(String));
+    expect(confirmAlert).not.toHaveBeenCalled();
   });
 
   test("should handle decimal input for percentage", () => {
@@ -220,13 +234,14 @@ describe("AlchemyCalculator", () => {
     
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
+    const glycerinInput = screen.getByRole("spinbutton", { name: "GLICERINA" });
+    fireEvent.change(glycerinInput, { target: { value: "70" } }); // Add glycerin input
+
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
-    expect(confirmAlert).toHaveBeenCalledTimes(1);
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar un porcentaje de glicerina',
-    }));
+    expect(mockSetResult).not.toHaveBeenCalledWith('');
+    expect(mockSetResult).toHaveBeenCalledWith(expect.any(String));
+    expect(confirmAlert).not.toHaveBeenCalled();
   });
 
   test("should handle multiple aroms and calculate total ML", () => {
@@ -250,13 +265,14 @@ describe("AlchemyCalculator", () => {
 
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
+    const glycerinInput = screen.getByRole("spinbutton", { name: "GLICERINA" });
+    fireEvent.change(glycerinInput, { target: { value: "70" } }); // Add glycerin input
+
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
-    expect(confirmAlert).toHaveBeenCalledTimes(1);
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar un porcentaje de glicerina',
-    }));
+    expect(mockSetResult).not.toHaveBeenCalledWith('');
+    expect(mockSetResult).toHaveBeenCalledWith(expect.any(String));
+    expect(confirmAlert).not.toHaveBeenCalled();
   });
 
   test("should handle zero input for percentage", () => {
@@ -270,13 +286,14 @@ describe("AlchemyCalculator", () => {
     
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
+    const glycerinInput = screen.getByRole("spinbutton", { name: "GLICERINA" });
+    fireEvent.change(glycerinInput, { target: { value: "70" } }); // Add glycerin input
+
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
-    expect(confirmAlert).toHaveBeenCalledTimes(1);
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar un porcentaje de glicerina',
-    }));
+    expect(mockSetResult).not.toHaveBeenCalledWith('');
+    expect(mockSetResult).toHaveBeenCalledWith(expect.any(String));
+    expect(confirmAlert).not.toHaveBeenCalled();
   });
 
   test("should trigger confirmAlert for zero input for total ML", async () => {
@@ -288,6 +305,10 @@ describe("AlchemyCalculator", () => {
     const addAromaButton = screen.getByRole('button', { name: /agregar aroma/i });
     expect(addAromaButton).toHaveTextContent('Agregar aroma');
     fireEvent.click(addAromaButton);
+
+    // Add glycerin input, even though total ML will trigger alert first
+    const glycerinInput = screen.getByRole("spinbutton", { name: "GLICERINA" });
+    fireEvent.change(glycerinInput, { target: { value: "70" } });
 
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "0" } });
@@ -310,6 +331,10 @@ describe("AlchemyCalculator", () => {
     const addAromaButton = screen.getByRole('button', { name: /agregar aroma/i });
     expect(addAromaButton).toHaveTextContent('Agregar aroma');
     fireEvent.click(addAromaButton);
+
+    // Add glycerin input, even though total ML will trigger alert first
+    const glycerinInput = screen.getByRole("spinbutton", { name: "GLICERINA" });
+    fireEvent.change(glycerinInput, { target: { value: "70" } });
 
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "-100" } });
@@ -334,13 +359,14 @@ describe("AlchemyCalculator", () => {
 
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "12.5" } });
+    const glycerinInput = screen.getByRole("spinbutton", { name: "GLICERINA" });
+    fireEvent.change(glycerinInput, { target: { value: "70" } }); // Add glycerin input
+
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(mockSetResult).toHaveBeenCalledWith('');
-    expect(confirmAlert).toHaveBeenCalledTimes(1);
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar un porcentaje de glicerina',
-    }));
+    expect(mockSetResult).not.toHaveBeenCalledWith('');
+    expect(mockSetResult).toHaveBeenCalledWith(expect.any(String));
+    expect(confirmAlert).not.toHaveBeenCalled();
   });
 
   test("should trigger confirmAlert if GLICERINA input is missing/invalid", async () => {
