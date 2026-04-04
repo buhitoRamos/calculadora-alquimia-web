@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import TextArea from "../Text-area/TextArea";
 import AlchemyInput from "../Alchemy-input/AlchemyInput";
+import { confirmAlert } from 'react-confirm-alert'; // Import confirmAlert
 
 const OhmsCalculator = () => {
   const [form, setForm] = useState(
@@ -86,7 +87,7 @@ const OhmsCalculator = () => {
       watt = volt * amper;
     }
 
-    text += ` Amper: ${amper.toFixed(2)}\n`;
+    text += `Amper: ${amper.toFixed(2)}\n`;
     text += `Ohms: ${ohms.toFixed(2)}\n`;
     text += `Watt: ${watt.toFixed(2)}\n`;
     text += `Volt: ${volt.toFixed(2)}`;

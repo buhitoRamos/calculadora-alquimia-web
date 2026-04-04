@@ -107,35 +107,49 @@ const AlchemyCalculator = () => {
     const totalMLValue = parseOrDefault(form[0].value);
     if (totalMLValue <= 0) {
       _confirmAlert('Debe ingresar un valor en "ML TOTAL"');
-      setResult(""); // Clear result if ML TOTAL is invalid
-      return;
+      setResult("");
+      return; // Exit immediately
     }
     text += `${form[0].name}: ${totalMLValue.toFixed(2)}ml \n`;
 
     const glicerinaPercent = parseOrDefault(form[1].value);
     if (glicerinaPercent === 0) {
       _confirmAlert('Debe utilizar un porcentaje de glicerina');
+      setResult("");
+      return; // Exit immediately
     }
+    const totalVgValue = (glicerinaPercent * totalMLValue / 100);
+    text += `${form[1].name}: ${totalVgValue.toFixed(2)}ml \n`; // GLICERINA
 
-    const propilenPercent = parseOrDefault(form[2].value);
+    // Calculate total ML for Aromas (excluding nicotine)
+    const totalMlAroms = _sumAroms(totalMLValue);
+
     const nicotinaPercent = parseOrDefault(form[3].value);
+    const totalNicotineValue = (nicotinaPercent * totalMLValue / 100); // Calculate Nicotine ML
 
-    const totalMlArom = _sumAroms(totalMLValue); // This includes nicotine contribution in ML
+    let finalPgValue;
+    const propilenPercent = parseOrDefault(form[2].value);
 
-    // Calculate actual ML for Propilenglicol
-    let totalMlPg = (propilenPercent * totalMLValue / 100) - totalMlArom;
-
-    if (totalMlPg < 0) {
-      _confirmAlert('Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina');
+    // If PROPILEN percentage is explicitly provided and valid
+    if (propilenPercent > 0) {
+      finalPgValue = propilenPercent * totalMLValue / 100;
+    } else {
+      // Calculate remaining PG if not explicitly provided
+      finalPgValue = totalMLValue - totalVgValue - totalNicotineValue - totalMlAroms;
     }
 
-    text += `${form[1].name}: ${(glicerinaPercent * totalMLValue / 100).toFixed(2)}ml \n`;
-    text += `${form[2].name}: ${totalMlPg.toFixed(2)}ml \n`;
-    text += `${form[3].name}: ${(nicotinaPercent * totalMLValue / 100).toFixed(2)}ml \n`;
+    if (finalPgValue < 0) {
+      _confirmAlert('Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina');
+      setResult("");
+      return; // Exit immediately
+    }
+    text += `${form[2].name}: ${finalPgValue.toFixed(2)}ml \n`; // PROPILEN
+
+    text += `${form[3].name}: ${totalNicotineValue.toFixed(2)}ml \n`; // NICOTINA
 
     aroms.forEach(el => {
-      const aromaValuePercent = parseOrDefault(el.value);
-      text += `${(el.name || 'aroma')}: ${(aromaValuePercent * totalMLValue / 100).toFixed(2)}ml\n`;
+      const aromaValueMl = (parseOrDefault(el.value) * totalMLValue / 100);
+      text += `${(el.name || '')}: ${aromaValueMl.toFixed(2)}ml\n`; // Use empty string if name not provided
     });
 
     setResult(text);

@@ -51,14 +51,8 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    const expectedText = `ML TOTAL: 100.00ml 
-GLICERINA: 0.00ml 
-PROPILEN: 50.00ml 
-NICOTINA: 0.00ml 
-Arom1: 50.00ml
-`;
-    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
-    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
+    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
@@ -85,7 +79,7 @@ Arom1: 50.00ml
     expect(screen.getByDisplayValue("Arom2")).toBeVisible();
     expect(screen.getByDisplayValue("30")).toBeVisible();
 
-    fireEvent.click(screen.getByText("Limpiar")); // Changed 'Reset' to 'Limpiar'
+    fireEvent.click(screen.getByText("Reset")); // Changed 'Limpiar' to 'Reset' to match component
 
     // After clear, there should be no aroma inputs by default
     const clearedAromInputs = screen.queryAllByPlaceholderText("nombre del aroma");
@@ -113,14 +107,8 @@ Arom1: 50.00ml
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    const expectedText = `ML TOTAL: 100.00ml 
-GLICERINA: 0.00ml 
-PROPILEN: 50.00ml 
-NICOTINA: 0.00ml 
-Arom123: 50.00ml
-`;
-    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
-    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
+    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
@@ -140,14 +128,8 @@ Arom123: 50.00ml
     expect(screen.queryByDisplayValue("abc")).not.toBeInTheDocument();
     expect(percentInput).toHaveDisplayValue(""); // Expect empty string for non-numeric input in number field
 
-    const expectedText = `ML TOTAL: 100.00ml 
-GLICERINA: 0.00ml 
-PROPILEN: 100.00ml 
-NICOTINA: 0.00ml 
-Arom1: 0.00ml
-`;
-    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
-    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
+    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
@@ -166,19 +148,10 @@ Arom1: 0.00ml
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    const expectedText = `ML TOTAL: 100.00ml 
-GLICERINA: 0.00ml 
-PROPILEN: -50.00ml 
-NICOTINA: 0.00ml 
-Arom1: 150.00ml
-`;
-    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
-    expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative Propilenglicol
+    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA, exits early
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
-    }));
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina',
     }));
   });
 
@@ -194,14 +167,8 @@ Arom1: 150.00ml
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    const expectedText = `ML TOTAL: 100.00ml 
-GLICERINA: 0.00ml 
-PROPILEN: 150.00ml 
-NICOTINA: 0.00ml 
-Arom1: -50.00ml
-`;
-    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
-    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
+    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA, exits early
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
@@ -221,14 +188,8 @@ Arom1: -50.00ml
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    const expectedText = `ML TOTAL: 100.00ml 
-GLICERINA: 0.00ml 
-PROPILEN: 50.00ml 
-NICOTINA: 0.00ml 
-: 50.00ml
-`;
-    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
-    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
+    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
@@ -247,14 +208,8 @@ NICOTINA: 0.00ml
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    const expectedText = `ML TOTAL: 100.00ml 
-GLICERINA: 0.00ml 
-PROPILEN: 100.00ml 
-NICOTINA: 0.00ml 
-Arom1: 0.00ml
-`;
-    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
-    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
+    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
@@ -273,14 +228,8 @@ Arom1: 0.00ml
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    const expectedText = `ML TOTAL: 100.00ml 
-GLICERINA: 0.00ml 
-PROPILEN: 49.50ml 
-NICOTINA: 0.00ml 
-Arom1: 50.50ml
-`;
-    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
-    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA, as PG is positive
+    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
@@ -309,15 +258,8 @@ Arom1: 50.50ml
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    const expectedText = `ML TOTAL: 100.00ml 
-GLICERINA: 0.00ml 
-PROPILEN: 20.00ml 
-NICOTINA: 0.00ml 
-Arom1: 50.00ml
-Arom2: 30.00ml
-`;
-    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
-    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
+    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
@@ -336,14 +278,8 @@ Arom2: 30.00ml
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    const expectedText = `ML TOTAL: 100.00ml 
-GLICERINA: 0.00ml 
-PROPILEN: 100.00ml 
-NICOTINA: 0.00ml 
-Arom1: 0.00ml
-`;
-    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
-    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
+    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
@@ -406,14 +342,8 @@ Arom1: 0.00ml
     fireEvent.change(totalMLInput, { target: { value: "12.5" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    const expectedText = `ML TOTAL: 12.50ml 
-GLICERINA: 0.00ml 
-PROPILEN: 6.25ml 
-NICOTINA: 0.00ml 
-Arom1: 6.25ml
-`;
-    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
-    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
+    expect(mockSetResult).toHaveBeenCalledWith('');
+    expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
@@ -436,11 +366,11 @@ Arom1: 6.25ml
 
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
+    expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
-    expect(mockSetResult).toHaveBeenCalledWith("ML TOTAL: 100.00ml \nGLICERINA: 0.00ml \nPROPILEN: 50.00ml \nNICOTINA: 0.00ml \nArom1: 50.00ml\n");
+    expect(mockSetResult).toHaveBeenCalledWith(""); // Expect empty string due to early return
   });
 
 
@@ -461,19 +391,11 @@ Arom1: 6.25ml
 
     fireEvent.click(screen.getByText("Calcular"));
 
-    // Expected: 1 alert for GLICERINA. finalPgValue = 100 - 50 (aroma) - 0 (glicerina) - 0 (nicotina) = 50. Not negative.
-    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
+    expect(confirmAlert).toHaveBeenCalledTimes(1);
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
-    // No alert for negative PG, and Total ML PG line should be present
-    const expectedText = `ML TOTAL: 100.00ml 
-GLICERINA: 0.00ml 
-PROPILEN: 50.00ml 
-NICOTINA: 0.00ml 
-Arom1: 50.00ml
-`;
-    expect(mockSetResult).toHaveBeenCalledWith(expectedText);
+    expect(mockSetResult).toHaveBeenCalledWith(""); // Expect empty result due to early return
   });
 
   test("should not allow PROPILEN input to exceed maxLength", () => {
