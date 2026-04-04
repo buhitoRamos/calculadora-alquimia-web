@@ -34,7 +34,14 @@ describe("AlchemyCalculator", () => {
  NICOTINA: 0ml 
  Arom1: 50.00ml
 `;
-    expect(screen.getByRole('textbox', { name: 'Calculadora Alquimia' })).toHaveValue(expectedText);
+    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(confirmAlert).toHaveBeenCalledTimes(2); // One for GLICERINA, one for negative PG
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar un porcentaje de glicerina',
+    }));
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina',
+    }));
   });
 
   test("should handle clear button", () => {
@@ -295,13 +302,14 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "0" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(confirmAlert).toHaveBeenCalledTimes(1);
+    expect(confirmAlert).toHaveBeenCalledTimes(2); // One for ML TOTAL, one for GLICERINA
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe ingresar un valor en "ML TOTAL"',
     }));
-    // After alert, the result text should not be a full calculation if calculation was halted or invalid
-    // It will contain the intermediate results up to the point of alert
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue("ML TOTAL: 0ml \n GLICERINA: 0ml \n PROPILEN: NaNml \n NICOTINA: 0ml \n Arom1: 0.00ml\n");
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar un porcentaje de glicerina',
+    }));
+    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue("ML TOTAL: 0ml \n GLICERINA: 0ml \n PROPILEN: NaNml \n NICOTINA: 0ml \n Arom1: NaNml\n"); // Aroma result is NaN if totalML is NaN/0
   });
 
   test("should trigger confirmAlert for negative input for total ML", async () => {
@@ -316,11 +324,14 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "-100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(confirmAlert).toHaveBeenCalledTimes(1);
+    expect(confirmAlert).toHaveBeenCalledTimes(2); // One for ML TOTAL, one for GLICERINA
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe ingresar un valor en "ML TOTAL"', // negative is also treated as invalid for totalML
+      title: 'Debe ingresar un valor en "ML TOTAL"',
     }));
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue("ML TOTAL: -100ml \n GLICERINA: 0ml \n PROPILEN: NaNml \n NICOTINA: 0ml \n Arom1: -50.00ml\n");
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar un porcentaje de glicerina',
+    }));
+    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue("ML TOTAL: -100ml \n GLICERINA: 0ml \n PROPILEN: NaNml \n NICOTINA: 0ml \n Arom1: NaNml\n"); // Aroma result is NaN if totalML is NaN/0
   });
 
   test("should handle decimal input for total ML", () => {
@@ -358,11 +369,14 @@ describe("AlchemyCalculator", () => {
 
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(confirmAlert).toHaveBeenCalledTimes(1);
+    expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative PG
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue("ML TOTAL: 100ml \n GLICERINA: NaNml \n PROPILEN: NaNml \n NICOTINA: 0ml \n Arom1: 50.00ml\n");
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina',
+    }));
+    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue("ML TOTAL: 100ml \n GLICERINA: 0ml \n PROPILEN: -50.00ml \n NICOTINA: 0ml \n Arom1: 50.00ml\n");
   });
 
 
@@ -382,7 +396,10 @@ describe("AlchemyCalculator", () => {
     fireEvent.click(screen.getByText("Calcular"));
 
     // Total ML Arom = 50ml, Total ML PG from form = 10ml, so totalMlPg = (10 - 50) = -40
-    expect(confirmAlert).toHaveBeenCalledTimes(1);
+    expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative PG
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar un porcentaje de glicerina',
+    }));
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina',
     }));

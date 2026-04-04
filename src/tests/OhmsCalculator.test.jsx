@@ -10,7 +10,7 @@ describe('OhmsCalculator', () => {
     const ohmsInput = screen.getByLabelText(/ohms/i);
     fireEvent.change(ohmsInput, { target: { value: '6' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByText('Amper: 2')).toBeInTheDocument();
+    expect(screen.getByText('Amper: 2.00')).toBeInTheDocument();
   });
 
   test('should calculate wattage when voltage and amper are provided', () => {
@@ -20,7 +20,7 @@ describe('OhmsCalculator', () => {
     const ampInput = screen.getByLabelText(/amper/i);
     fireEvent.change(ampInput, { target: { value: '2' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByText('Watt: 24')).toBeInTheDocument();
+    expect(screen.getByText('Watt: 24.00')).toBeInTheDocument();
   });
 
   test('should calculate ohms when voltage and watt are provided', () => {
@@ -30,7 +30,7 @@ describe('OhmsCalculator', () => {
     const wattInput = screen.getByLabelText(/watt/i);
     fireEvent.change(wattInput, { target: { value: '24' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByText('Ohms: 6')).toBeInTheDocument();
+    expect(screen.getByText('Ohms: 6.00')).toBeInTheDocument();
   });
 
   test('should handle clear button', () => {
@@ -40,11 +40,11 @@ describe('OhmsCalculator', () => {
     const ohmsInput = screen.getByLabelText(/ohms/i);
     fireEvent.change(ohmsInput, { target: { value: '6' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByText('Amper: 2')).toBeInTheDocument();
+    expect(screen.getByText('Amper: 2.00')).toBeInTheDocument();
     fireEvent.click(screen.getByText('Limpiar'));
     expect(voltInput.value).toBe('');
     expect(ohmsInput.value).toBe('');
-    expect(screen.queryByText('Amper: 2')).not.toBeInTheDocument();
+    expect(screen.queryByText('Amper: 2.00')).not.toBeInTheDocument();
   });
 
   test('should handle invalid input for voltage', () => {

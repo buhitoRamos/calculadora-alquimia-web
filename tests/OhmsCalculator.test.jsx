@@ -13,7 +13,7 @@ describe('OhmsCalculator', () => {
   test('calculates amperage when voltage and resistance are provided', () => {
     render(<OhmsCalculator />);
     fireEvent.change(screen.getAllByPlaceholderText(/ingrese valor/i)[0], { target: { value: '12' } });
-    fireEvent.change(screen.getAllByPlaceholderText(/ingrese valor/i)[1], { target: { value: '3' } });
+    fireEvent.change(screen.getAllByPlaceholderText(/ingrese valor/i)[2], { target: { value: '3' } }); // Changed index from 1 (WATT) to 2 (OHMS)
     fireEvent.click(screen.getByText(/Calcular/i));
     expect(screen.getByText(/Amper: 4.00/)).toBeInTheDocument();
   });
@@ -36,7 +36,7 @@ describe('OhmsCalculator', () => {
 
   test('calculates voltage when current and resistance are provided', () => {
     render(<OhmsCalculator />);
-    fireEvent.change(screen.getAllByPlaceholderText(/ingrese valor/i)[1], { target: { value: '144' } });
+    fireEvent.change(screen.getAllByPlaceholderText(/ingrese valor/i)[2], { target: { value: '144' } }); // Changed index from 1 (WATT) to 2 (OHMS)
     fireEvent.change(screen.getAllByPlaceholderText(/ingrese valor/i)[3], { target: { value: '10' } });
     fireEvent.click(screen.getByText(/Calcular/i));
     expect(screen.getByText(/Volt: 14.40/)).toBeInTheDocument();
