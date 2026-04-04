@@ -28,51 +28,6 @@ const OhmsCalculator = () => {
 
     setForm(newForm);
   }
-  const _amperCalculate = (volt, ohms, watt) => {
-    let aux = " Amper: "
-    if (volt > 0 && ohms > 0) {
-      aux = aux + (volt / ohms).toFixed(2);
-    } else if (volt > 0 && watt > 0) {
-      aux = aux + (watt / volt).toFixed(2);
-    } else if (watt > 0 && ohms > 0) {
-      aux = aux + (Math.sqrt(watt / ohms)).toFixed(2);
-    }
-
-    return aux;
-  }
-  const _ohmsCalculate = (volt, watt, amp) => {
-    let aux = "Ohms: ";
-    if (volt > 0 && amp > 0) {
-      aux = aux + (volt / amp).toFixed(2);
-    } else if (volt > 0 && watt > 0) {
-      aux = aux + (volt * volt / watt).toFixed(2);
-    } else if (watt > 0 && amp > 0) {
-      aux = aux + (watt / (amp * amp)).toFixed(2);
-    }
-    return aux;
-  };
-  const _wattCalculate = (amp, ohms, volt) => {
-    let aux = "Watt: ";
-    if (volt > 0 && amp > 0) {
-      aux = aux + (volt * amp).toFixed(2);
-    } else if (volt > 0 && ohms > 0) {
-      aux = aux + ((volt * volt) / ohms).toFixed(2);
-    } else if (ohms > 0 && amp > 0) {
-      aux = aux + ((amp * amp) * ohms).toFixed(2);
-    }
-    return aux;
-  }
-  const _voltCalculate = (amp, watt, ohms) => {
-    let aux = "Volt: ";
-    if (amp > 0 && ohms > 0) {
-      aux = aux + (amp * ohms).toFixed(2);
-    } else if (watt > 0 && amp > 0) {
-      aux = aux + (watt / amp).toFixed(2);
-    } else if (watt > 0 && ohms > 0) {
-      aux = aux + Math.sqrt(watt * ohms).toFixed(2);
-    }
-    return aux
-  }
   const calculate = () => {
     let cont = 0;
     const parsedFormValues = form.map(item => {
@@ -83,44 +38,61 @@ const OhmsCalculator = () => {
       return parsedValue;
     });
 
-    if (cont === 2) {
-      const volt = parsedFormValues[0];
-      const watt = parsedFormValues[1];
-      const ohms = parsedFormValues[2];
-      const amp = parsedFormValues[3];
+    let volt = parsedFormValues[0];
+    let watt = parsedFormValues[1];
+    let ohms = parsedFormValues[2];
+    let amper = parsedFormValues[3];
+    let text = "";
 
-      let text = "";
-      if (amp === 0 || isNaN(amp)) { // If amp is not provided or invalid, calculate it
-        text += _amperCalculate(volt, ohms, watt);
-      } else { // Otherwise, use the provided amp
-        text += ` Amper: ${amp.toFixed(2)}`;
-      }
-      text += "\n";
-
-      if (ohms === 0 || isNaN(ohms)) {
-        text += _ohmsCalculate(volt, watt, amp);
-      } else {
-        text += `Ohms: ${ohms.toFixed(2)}`;
-      }
-      text += "\n";
-
-      if (watt === 0 || isNaN(watt)) {
-        text += _wattCalculate(amp, volt, ohms);
-      } else {
-        text += `Watt: ${watt.toFixed(2)}`;
-      }
-      text += "\n";
-
-      if (volt === 0 || isNaN(volt)) {
-        text += _voltCalculate(amp, watt, ohms);
-      } else {
-        text += `Volt: ${volt.toFixed(2)}`;
-      }
-      setResult(text);
-    } else {
-      setResult(""); // Clear result if not exactly two positive inputs
+    if (cont !== 2) {
+      confirmAlert({
+        title: 'Se denbe ingresar solo 2 valores para calcular el resto',
+        message: `La operación no se puede realizar con exito, pulse reset para volver a comenzar o
+                   cancelar para no perder lo guardado y corregir el error.`,
+        buttons: [
+          {
+            label: 'Reset',
+            onClick: () => {
+              clear()
+            }
+          },
+          {
+            label: 'Cancelar',
+          }
+        ]
+      });
+      setResult("");
+      return;
     }
-  }
+
+    // Derive all four values based on the two inputs
+    if (volt > 0 && ohms > 0) {
+      amper = volt / ohms;
+      watt = volt * amper;
+    } else if (volt > 0 && watt > 0) {
+      amper = watt / volt;
+      ohms = volt / amper;
+    } else if (volt > 0 && amper > 0) {
+      ohms = volt / amper;
+      watt = volt * amper;
+    } else if (watt > 0 && ohms > 0) {
+      volt = Math.sqrt(watt * ohms);
+      amper = watt / volt;
+    } else if (watt > 0 && amper > 0) {
+      volt = watt / amper;
+      ohms = volt / amper;
+    } else if (ohms > 0 && amper > 0) {
+      volt = amper * ohms;
+      watt = volt * amper;
+    }
+
+    text += ` Amper: ${amper.toFixed(2)}\n`;
+    text += `Ohms: ${ohms.toFixed(2)}\n`;
+    text += `Watt: ${watt.toFixed(2)}\n`;
+    text += `Volt: ${volt.toFixed(2)}`;
+
+    setResult(text);
+  };
   const clear = () => {
     setForm(
       [
