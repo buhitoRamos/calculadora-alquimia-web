@@ -52,10 +52,10 @@ describe("AlchemyCalculator", () => {
     fireEvent.click(screen.getByText("Calcular"));
 
     const expectedText = `ML TOTAL: 100.00ml 
- GLICERINA: 0.00ml 
- PROPILEN: 50.00ml 
- NICOTINA: 0.00ml 
- Arom1: 50.00ml
+GLICERINA: 0.00ml 
+PROPILEN: 50.00ml 
+NICOTINA: 0.00ml 
+Arom1: 50.00ml
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
@@ -114,10 +114,10 @@ describe("AlchemyCalculator", () => {
     fireEvent.click(screen.getByText("Calcular"));
 
     const expectedText = `ML TOTAL: 100.00ml 
- GLICERINA: 0.00ml 
- PROPILEN: 50.00ml 
- NICOTINA: 0.00ml 
- Arom123: 50.00ml
+GLICERINA: 0.00ml 
+PROPILEN: 50.00ml 
+NICOTINA: 0.00ml 
+Arom123: 50.00ml
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
@@ -141,10 +141,10 @@ describe("AlchemyCalculator", () => {
     expect(percentInput).toHaveDisplayValue(""); // Expect empty string for non-numeric input in number field
 
     const expectedText = `ML TOTAL: 100.00ml 
- GLICERINA: 0.00ml 
- PROPILEN: 100.00ml 
- NICOTINA: 0.00ml 
- Arom1: 0.00ml
+GLICERINA: 0.00ml 
+PROPILEN: 100.00ml 
+NICOTINA: 0.00ml 
+Arom1: 0.00ml
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
@@ -167,10 +167,10 @@ describe("AlchemyCalculator", () => {
     fireEvent.click(screen.getByText("Calcular"));
 
     const expectedText = `ML TOTAL: 100.00ml 
- GLICERINA: 0.00ml 
- PROPILEN: -50.00ml 
- NICOTINA: 0.00ml 
- Arom1: 150.00ml
+GLICERINA: 0.00ml 
+PROPILEN: -50.00ml 
+NICOTINA: 0.00ml 
+Arom1: 150.00ml
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative Propilenglicol
@@ -195,10 +195,10 @@ describe("AlchemyCalculator", () => {
     fireEvent.click(screen.getByText("Calcular"));
 
     const expectedText = `ML TOTAL: 100.00ml 
- GLICERINA: 0.00ml 
- PROPILEN: 150.00ml 
- NICOTINA: 0.00ml 
- Arom1: -50.00ml
+GLICERINA: 0.00ml 
+PROPILEN: 150.00ml 
+NICOTINA: 0.00ml 
+Arom1: -50.00ml
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
@@ -222,10 +222,10 @@ describe("AlchemyCalculator", () => {
     fireEvent.click(screen.getByText("Calcular"));
 
     const expectedText = `ML TOTAL: 100.00ml 
- GLICERINA: 0.00ml 
- PROPILEN: 50.00ml 
- NICOTINA: 0.00ml 
- : 50.00ml
+GLICERINA: 0.00ml 
+PROPILEN: 50.00ml 
+NICOTINA: 0.00ml 
+: 50.00ml
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
@@ -248,10 +248,10 @@ describe("AlchemyCalculator", () => {
     fireEvent.click(screen.getByText("Calcular"));
 
     const expectedText = `ML TOTAL: 100.00ml 
- GLICERINA: 0.00ml 
- PROPILEN: 100.00ml 
- NICOTINA: 0.00ml 
- Arom1: 0.00ml
+GLICERINA: 0.00ml 
+PROPILEN: 100.00ml 
+NICOTINA: 0.00ml 
+Arom1: 0.00ml
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
@@ -274,10 +274,10 @@ describe("AlchemyCalculator", () => {
     fireEvent.click(screen.getByText("Calcular"));
 
     const expectedText = `ML TOTAL: 100.00ml 
- GLICERINA: 0.00ml 
- PROPILEN: 49.50ml 
- NICOTINA: 0.00ml 
- Arom1: 50.50ml
+GLICERINA: 0.00ml 
+PROPILEN: 49.50ml 
+NICOTINA: 0.00ml 
+Arom1: 50.50ml
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA, as PG is positive
@@ -310,11 +310,11 @@ describe("AlchemyCalculator", () => {
     fireEvent.click(screen.getByText("Calcular"));
 
     const expectedText = `ML TOTAL: 100.00ml 
- GLICERINA: 0.00ml 
- PROPILEN: 20.00ml 
- NICOTINA: 0.00ml 
- Arom1: 50.00ml
- Arom2: 30.00ml
+GLICERINA: 0.00ml 
+PROPILEN: 20.00ml 
+NICOTINA: 0.00ml 
+Arom1: 50.00ml
+Arom2: 30.00ml
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
@@ -337,10 +337,10 @@ describe("AlchemyCalculator", () => {
     fireEvent.click(screen.getByText("Calcular"));
 
     const expectedText = `ML TOTAL: 100.00ml 
- GLICERINA: 0.00ml 
- PROPILEN: 100.00ml 
- NICOTINA: 0.00ml 
- Arom1: 0.00ml
+GLICERINA: 0.00ml 
+PROPILEN: 100.00ml 
+NICOTINA: 0.00ml 
+Arom1: 0.00ml
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
@@ -407,10 +407,10 @@ describe("AlchemyCalculator", () => {
     fireEvent.click(screen.getByText("Calcular"));
 
     const expectedText = `ML TOTAL: 12.50ml 
- GLICERINA: 0.00ml 
- PROPILEN: 6.25ml 
- NICOTINA: 0.00ml 
- Arom1: 6.25ml
+GLICERINA: 0.00ml 
+PROPILEN: 6.25ml 
+NICOTINA: 0.00ml 
+Arom1: 6.25ml
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
@@ -440,7 +440,7 @@ describe("AlchemyCalculator", () => {
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
-    expect(mockSetResult).toHaveBeenCalledWith("ML TOTAL: 100.00ml \n GLICERINA: 0.00ml \n PROPILEN: 50.00ml \n NICOTINA: 0.00ml \n Arom1: 50.00ml\n");
+    expect(mockSetResult).toHaveBeenCalledWith("ML TOTAL: 100.00ml \nGLICERINA: 0.00ml \nPROPILEN: 50.00ml \nNICOTINA: 0.00ml \nArom1: 50.00ml\n");
   });
 
 
@@ -468,11 +468,11 @@ describe("AlchemyCalculator", () => {
     }));
     // No alert for negative PG, and Total ML PG line should be present
     const expectedText = `ML TOTAL: 100.00ml 
- GLICERINA: 0.00ml 
- PROPILEN: 10.00ml 
- NICOTINA: 0.00ml 
- Arom1: 50.00ml
-`; // The component does not output "Total ML PG" in this scenario, it outputs calculated PG as the PROPILEN line.
+GLICERINA: 0.00ml 
+PROPILEN: 50.00ml 
+NICOTINA: 0.00ml 
+Arom1: 50.00ml
+`;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
   });
 

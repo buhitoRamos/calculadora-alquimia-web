@@ -10,7 +10,7 @@ describe('OhmsCalculator', () => {
     const ohmsInput = screen.getByRole('spinbutton', { name: 'OHMS' });
     fireEvent.change(ohmsInput, { target: { value: '6' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(` Amper: 2.00
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(`Amper: 2.00
 Ohms: 6.00
 Watt: 24.00
 Volt: 12.00`);
@@ -23,7 +23,7 @@ Volt: 12.00`);
     const ampInput = screen.getByRole('spinbutton', { name: 'AMPER' });
     fireEvent.change(ampInput, { target: { value: '2' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(` Amper: 2.00
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(`Amper: 2.00
 Ohms: 6.00
 Watt: 24.00
 Volt: 12.00`);
@@ -36,7 +36,7 @@ Volt: 12.00`);
     const wattInput = screen.getByRole('spinbutton', { name: 'WATT' });
     fireEvent.change(wattInput, { target: { value: '24' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(` Amper: 2.00
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(`Amper: 2.00
 Ohms: 6.00
 Watt: 24.00
 Volt: 12.00`);
@@ -49,7 +49,7 @@ Volt: 12.00`);
     const ohmsInput = screen.getByRole('spinbutton', { name: 'OHMS' });
     fireEvent.change(ohmsInput, { target: { value: '6' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(` Amper: 2.00
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(`Amper: 2.00
 Ohms: 6.00
 Watt: 24.00
 Volt: 12.00`);
@@ -150,7 +150,7 @@ Volt: 12.00`);
     const ohmsInput = screen.getByRole('spinbutton', { name: 'OHMS' });
     fireEvent.change(ohmsInput, { target: { value: '6' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(` Amper: 2.08
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(`Amper: 2.08
 Ohms: 6.00
 Watt: 26.04
 Volt: 12.50`);
@@ -163,7 +163,7 @@ Volt: 12.50`);
     const ohmsInput = screen.getByRole('spinbutton', { name: 'OHMS' });
     fireEvent.change(ohmsInput, { target: { value: '6.5' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(` Amper: 1.85
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(`Amper: 1.85
 Ohms: 6.50
 Watt: 22.15
 Volt: 12.00`);
@@ -176,7 +176,7 @@ Volt: 12.00`);
     const wattInput = screen.getByRole('spinbutton', { name: 'WATT' });
     fireEvent.change(wattInput, { target: { value: '24.5' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(` Amper: 2.04
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(`Amper: 2.04
 Ohms: 5.88
 Watt: 24.50
 Volt: 12.00`);
