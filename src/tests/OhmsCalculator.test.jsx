@@ -10,7 +10,7 @@ describe('OhmsCalculator', () => {
     const ohmsInput = screen.getByLabelText(/ohms/i);
     fireEvent.change(ohmsInput, { target: { value: '6' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByText('Amper: 2.00')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(expect.stringContaining('Amper: 2.00'));
   });
 
   test('should calculate wattage when voltage and amper are provided', () => {
@@ -20,7 +20,7 @@ describe('OhmsCalculator', () => {
     const ampInput = screen.getByRole('spinbutton', { name: 'AMPER' });
     fireEvent.change(ampInput, { target: { value: '2' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByText('Watt: 24.00')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(expect.stringContaining('Watt: 24.00'));
   });
 
   test('should calculate ohms when voltage and watt are provided', () => {
@@ -30,7 +30,7 @@ describe('OhmsCalculator', () => {
     const wattInput = screen.getByRole('spinbutton', { name: 'WATT' });
     fireEvent.change(wattInput, { target: { value: '24' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByText('Ohms: 6.00')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(expect.stringContaining('Ohms: 6.00'));
   });
 
   test('should handle clear button', () => {
@@ -40,11 +40,11 @@ describe('OhmsCalculator', () => {
     const ohmsInput = screen.getByRole('spinbutton', { name: 'OHMS' });
     fireEvent.change(ohmsInput, { target: { value: '6' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByText('Amper: 2.00')).toBeInTheDocument();
-    fireEvent.click(screen.getByText('Limpiar'));
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(expect.stringContaining('Amper: 2.00'));
+    fireEvent.click(screen.getByText('Reset')); // Changed 'Limpiar' to 'Reset'
     expect(voltInput.value).toBe('');
     expect(ohmsInput.value).toBe('');
-    expect(screen.queryByText('Amper: 2.00')).not.toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' }).value).toBe(''); // Clear result text area
   });
 
   test('should handle invalid input for voltage', () => {
@@ -52,7 +52,7 @@ describe('OhmsCalculator', () => {
     const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: 'abc' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.queryByText('Amper: 2')).not.toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(''); // Expect empty result
   });
 
   test('should handle invalid input for ohms', () => {
@@ -62,17 +62,17 @@ describe('OhmsCalculator', () => {
     const ohmsInput = screen.getByRole('spinbutton', { name: 'OHMS' });
     fireEvent.change(ohmsInput, { target: { value: 'abc' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.queryByText('Amper: 2')).not.toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(''); // Expect empty result
   });
 
   test('should handle invalid input for watt', () => {
     render(<OhmsCalculator />);
     const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: '12' } });
-    const wattInput = screen.getByLabelText(/watt/i);
+    const wattInput = screen.getByRole('spinbutton', { name: 'WATT' }); // Changed to getByRole with name
     fireEvent.change(wattInput, { target: { value: 'abc' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.queryByText('Amper: 2')).not.toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(''); // Expect empty result
   });
 
   test('should handle empty input for voltage', () => {
@@ -80,7 +80,7 @@ describe('OhmsCalculator', () => {
     const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: '' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.queryByText('Amper: 2')).not.toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue('');
   });
 
   test('should handle empty input for ohms', () => {
@@ -90,7 +90,7 @@ describe('OhmsCalculator', () => {
     const ohmsInput = screen.getByRole('spinbutton', { name: 'OHMS' });
     fireEvent.change(ohmsInput, { target: { value: '' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.queryByText('Amper: 2')).not.toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue('');
   });
 
   test('should handle empty input for watt', () => {
@@ -100,15 +100,15 @@ describe('OhmsCalculator', () => {
     const wattInput = screen.getByRole('spinbutton', { name: 'WATT' });
     fireEvent.change(wattInput, { target: { value: '' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.queryByText('Amper: 2')).not.toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue('');
   });
 
   test('should handle zero input for voltage', () => {
     render(<OhmsCalculator />);
-    const voltInput = screen.getByLabelText(/voltios/i);
+    const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' }); // Changed to getByRole with name
     fireEvent.change(voltInput, { target: { value: '0' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.queryByText('Amper: 2')).not.toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue('');
   });
 
   test('should handle zero input for ohms', () => {
@@ -118,7 +118,7 @@ describe('OhmsCalculator', () => {
     const ohmsInput = screen.getByRole('spinbutton', { name: 'OHMS' });
     fireEvent.change(ohmsInput, { target: { value: '0' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.queryByText('Amper: 2')).not.toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue('');
   });
 
   test('should handle zero input for watt', () => {
@@ -128,7 +128,7 @@ describe('OhmsCalculator', () => {
     const wattInput = screen.getByRole('spinbutton', { name: 'WATT' });
     fireEvent.change(wattInput, { target: { value: '0' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.queryByText('Amper: 2')).not.toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue('');
   });
 
   test('should handle decimal input for voltage', () => {
@@ -138,7 +138,7 @@ describe('OhmsCalculator', () => {
     const ohmsInput = screen.getByRole('spinbutton', { name: 'OHMS' });
     fireEvent.change(ohmsInput, { target: { value: '6' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByText('Amper: 2.08')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(expect.stringContaining('Amper: 2.08'));
   });
 
   test('should handle decimal input for ohms', () => {
@@ -148,7 +148,7 @@ describe('OhmsCalculator', () => {
     const ohmsInput = screen.getByRole('spinbutton', { name: 'OHMS' });
     fireEvent.change(ohmsInput, { target: { value: '6.5' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByText('Amper: 1.85')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(expect.stringContaining('Amper: 1.85'));
   });
 
   test('should handle decimal input for watt', () => {
@@ -158,6 +158,6 @@ describe('OhmsCalculator', () => {
     const wattInput = screen.getByRole('spinbutton', { name: 'WATT' });
     fireEvent.change(wattInput, { target: { value: '24.5' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByText('Ohms: 5.88')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(expect.stringContaining('Ohms: 5.88'));
   });
 });
