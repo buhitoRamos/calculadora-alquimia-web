@@ -36,7 +36,8 @@ const AlchemyCalculator = () => {
         if (id === "label") {
           arom.name = value
         } else {
-          if (value.length < maxLength) {
+          // Allow values up to maxLength to be set
+          if (value.length <= maxLength) {
             arom.value = value
           }
         }
