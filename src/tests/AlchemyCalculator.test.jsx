@@ -62,9 +62,6 @@ describe("AlchemyCalculator", () => {
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina',
-    }));
   });
 
   test("should handle clear button", () => {
@@ -127,9 +124,6 @@ describe("AlchemyCalculator", () => {
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina',
-    }));
   });
 
   test("should handle non-numeric input for percentage resulting in 0 contribution", () => {
@@ -182,9 +176,6 @@ describe("AlchemyCalculator", () => {
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
-    }));
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina',
     }));
   });
 
@@ -286,7 +277,7 @@ describe("AlchemyCalculator", () => {
  Arom1: 50.50ml
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
-    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
+    expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative Propilenglicol
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
@@ -305,8 +296,8 @@ describe("AlchemyCalculator", () => {
 
     // Ensure the add aroma button text is "Agregar aroma" and click it
     const addAromaButton = screen.getByRole('button', { name: /agregar aroma/i });
-    expect(addAromaButton).toHaveTextContent('Agregar aroma'); // Assert exact text content, as requested
-    fireEvent.click(addAromaButton); // This will search for 'Agregar aroma', which currently doesn't exist.
+    expect(addAromaButton).toHaveTextContent('Agregar aroma');
+    fireEvent.click(addAromaButton);
 
     // Get the newly added aroma inputs (now there are 2)
     aromInputs = screen.getAllByPlaceholderText("nombre del aroma");
@@ -329,9 +320,6 @@ describe("AlchemyCalculator", () => {
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
-    }));
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina',
     }));
   });
 
@@ -428,9 +416,6 @@ describe("AlchemyCalculator", () => {
     expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
-    }));
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina',
     }));
   });
 

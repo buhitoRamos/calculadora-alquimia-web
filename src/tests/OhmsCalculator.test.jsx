@@ -12,7 +12,7 @@ describe('OhmsCalculator', () => {
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(` Amper: 2.00
 Ohms: 6.00
-Watt: 3.00
+Watt: 24.00
 Volt: 12.00`);
   });
 
@@ -25,7 +25,7 @@ Volt: 12.00`);
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(` Amper: 2.00
 Ohms: 6.00
-Watt: 48.00
+Watt: 24.00
 Volt: 12.00`);
   });
 
@@ -51,7 +51,7 @@ Volt: 12.00`);
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(` Amper: 2.00
 Ohms: 6.00
-Watt: 3.00
+Watt: 24.00
 Volt: 12.00`);
     fireEvent.click(screen.getByText('Reset')); // Changed 'Limpiar' to 'Reset'
     expect(voltInput).toHaveDisplayValue('');
@@ -152,7 +152,7 @@ Volt: 12.00`);
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(` Amper: 2.08
 Ohms: 6.00
-Watt: 2.88
+Watt: 26.04
 Volt: 12.50`);
   });
 
@@ -165,7 +165,7 @@ Volt: 12.50`);
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(` Amper: 1.85
 Ohms: 6.50
-Watt: 3.52
+Watt: 22.15
 Volt: 12.00`);
   });
 
