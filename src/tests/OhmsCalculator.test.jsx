@@ -63,7 +63,7 @@ Volt: 12.00`);
 Ohms: 6.00
 Watt: 24.00
 Volt: 12.00`);
-    fireEvent.click(screen.getByText('Limpiar'));
+    fireEvent.click(screen.getByText('Reset'));
     expect(voltInput).toHaveDisplayValue('');
     expect(ohmsInput).toHaveDisplayValue('');
     expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(''); // Clear result text area

@@ -8,32 +8,38 @@ jest.mock('react-confirm-alert', () => ({
   confirmAlert: jest.fn(),
 }));
 
-// Mock setResult from useState to capture calls
 const mockSetResult = jest.fn();
-const originalUseState = jest.requireActual('react').useState; // Get the actual useState
-
-beforeAll(() => {
-  jest.spyOn(React, 'useState').mockImplementation((initialValue) => {
-    // Call the original useState for all instances
-    const [value, setter] = originalUseState(initialValue);
-    // If the initialValue is an empty string, we assume it's the result state.
-    // Replace its setter with our mockSetResult.
-    if (typeof initialValue === 'string' && initialValue === "") {
-      return [value, mockSetResult];
-    }
-    // For other state variables, return the original value and setter
-    return [value, setter];
-  });
-});
-
-afterAll(() => {
-  jest.restoreAllMocks(); // Restore all mocks after all tests are done
-});
+const originalUseState = jest.requireActual('react').useState; // Get the actual useState hook
 
 describe("AlchemyCalculator", () => {
+  let mockStateCounter;
+
   beforeEach(() => {
-    confirmAlert.mockClear(); // Clear mock calls before each test
-    mockSetResult.mockClear(); // Clear mock calls for setResult
+    // Clear mock calls before each test
+    confirmAlert.mockClear();
+    mockSetResult.mockClear();
+    jest.restoreAllMocks(); // Ensure a clean slate for useState mocks
+
+    // Reset the mock state counter for each test
+    mockStateCounter = 0;
+
+    // Spy on React.useState and apply specific mock implementations based on call order.
+    // This assumes the order of useState calls in AlchemyCalculator.jsx is:
+    // 1. aroms
+    // 2. form
+    // 3. result (which uses setResult)
+    jest.spyOn(React, 'useState').mockImplementation((initialValue) => {
+      mockStateCounter++;
+      if (mockStateCounter === 3) { // This is the expected call for the 'result' state
+        return [initialValue, mockSetResult]; // Return the initial value and our mock setter
+      }
+      // For all other useState calls, use the original implementation
+      return originalUseState(initialValue);
+    });
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks(); // Restore all mocks after each test
   });
 
   test("should add aroms and calculate total ML", () => {
