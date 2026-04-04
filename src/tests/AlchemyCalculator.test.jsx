@@ -30,7 +30,7 @@ describe("AlchemyCalculator", () => {
 
     const expectedText = `ML TOTAL: 100ml 
  GLICERINA: 0ml 
- PROPILEN: 50.00ml 
+ PROPILEN: -50.00ml 
  NICOTINA: 0ml 
  Arom1: 50.00ml
 `;
@@ -93,11 +93,18 @@ describe("AlchemyCalculator", () => {
 
     const expectedText = `ML TOTAL: 100ml 
  GLICERINA: 0ml 
- PROPILEN: 50.00ml 
+ PROPILEN: -50.00ml 
  NICOTINA: 0ml 
  Arom123: 50.00ml
 `;
     expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(confirmAlert).toHaveBeenCalledTimes(2); // One for GLICERINA, one for negative PG
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar un porcentaje de glicerina',
+    }));
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina',
+    }));
   });
 
   test("should handle non-numeric input for percentage resulting in 0 contribution", () => {
@@ -115,11 +122,15 @@ describe("AlchemyCalculator", () => {
     
     const expectedText = `ML TOTAL: 100ml 
  GLICERINA: 0ml 
- PROPILEN: 100.00ml 
+ PROPILEN: 0.00ml 
  NICOTINA: 0ml 
  Arom1: 0.00ml
 `;
     expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar un porcentaje de glicerina',
+    }));
   });
 
   test("should handle percentage greater than 100 (e.g., 150)", () => {
@@ -137,13 +148,15 @@ describe("AlchemyCalculator", () => {
 
     const expectedText = `ML TOTAL: 100ml 
  GLICERINA: 0ml 
- PROPILEN: -50.00ml 
+ PROPILEN: -150.00ml 
  NICOTINA: 0ml 
  Arom1: 150.00ml
 `;
     expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
-    // Since totalMlPg is negative (0 - 150 = -150), confirmAlert should be triggered
-    expect(confirmAlert).toHaveBeenCalledTimes(1);
+    expect(confirmAlert).toHaveBeenCalledTimes(2); // One for GLICERINA, one for negative PG
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar un porcentaje de glicerina',
+    }));
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina',
     }));
@@ -163,11 +176,15 @@ describe("AlchemyCalculator", () => {
 
     const expectedText = `ML TOTAL: 100ml 
  GLICERINA: 0ml 
- PROPILEN: 150.00ml 
+ PROPILEN: 50.00ml 
  NICOTINA: 0ml 
  Arom1: -50.00ml
 `;
     expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar un porcentaje de glicerina',
+    }));
   });
 
   test("should handle empty input for arom name", () => {
@@ -186,11 +203,15 @@ describe("AlchemyCalculator", () => {
 
     const expectedText = `ML TOTAL: 100ml 
  GLICERINA: 0ml 
- PROPILEN: 50.00ml 
+ PROPILEN: 0.00ml 
  NICOTINA: 0ml 
- : 50.00ml
+ : 0.00ml
 `;
     expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar un porcentaje de glicerina',
+    }));
   });
 
   test("should handle empty input for percentage", () => {
@@ -208,11 +229,15 @@ describe("AlchemyCalculator", () => {
 
     const expectedText = `ML TOTAL: 100ml 
  GLICERINA: 0ml 
- PROPILEN: 100.00ml 
+ PROPILEN: 0.00ml 
  NICOTINA: 0ml 
  Arom1: 0.00ml
 `;
     expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar un porcentaje de glicerina',
+    }));
   });
 
   test("should handle decimal input for percentage", () => {
@@ -230,11 +255,18 @@ describe("AlchemyCalculator", () => {
 
     const expectedText = `ML TOTAL: 100ml 
  GLICERINA: 0ml 
- PROPILEN: 49.50ml 
+ PROPILEN: -50.50ml 
  NICOTINA: 0ml 
  Arom1: 50.50ml
 `;
     expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative PG
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar un porcentaje de glicerina',
+    }));
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina',
+    }));
   });
 
   test("should handle multiple aroms and calculate total ML", () => {
@@ -260,12 +292,19 @@ describe("AlchemyCalculator", () => {
 
     const expectedText = `ML TOTAL: 100ml 
  GLICERINA: 0ml 
- PROPILEN: 20.00ml 
+ PROPILEN: -80.00ml 
  NICOTINA: 0ml 
  Arom1: 50.00ml
  Arom2: 30.00ml
 `;
     expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative PG
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar un porcentaje de glicerina',
+    }));
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina',
+    }));
   });
 
   test("should handle zero input for percentage", () => {
@@ -283,11 +322,15 @@ describe("AlchemyCalculator", () => {
 
     const expectedText = `ML TOTAL: 100ml 
  GLICERINA: 0ml 
- PROPILEN: 100.00ml 
+ PROPILEN: 0.00ml 
  NICOTINA: 0ml 
  Arom1: 0.00ml
 `;
     expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar un porcentaje de glicerina',
+    }));
   });
 
   test("should trigger confirmAlert for zero input for total ML", async () => {
@@ -348,11 +391,18 @@ describe("AlchemyCalculator", () => {
 
     const expectedText = `ML TOTAL: 12.5ml 
  GLICERINA: 0ml 
- PROPILEN: 6.25ml 
+ PROPILEN: -6.25ml 
  NICOTINA: 0ml 
  Arom1: 6.25ml
 `;
     expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative PG
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar un porcentaje de glicerina',
+    }));
+    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina',
+    }));
   });
 
   test("should trigger confirmAlert if GLICERINA input is missing/invalid", async () => {
