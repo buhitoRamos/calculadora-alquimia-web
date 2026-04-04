@@ -378,8 +378,6 @@ describe("AlchemyCalculator", () => {
     expect(addAromaButton).toHaveTextContent('Agregar aroma');
     fireEvent.click(addAromaButton);
 
-    const pgInput = screen.getByRole("spinbutton", { name: "PROPILEN" });
-    fireEvent.change(pgInput, { target: { value: "10" } }); // 10% PG
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } }); // 100ml total
 
