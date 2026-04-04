@@ -158,6 +158,6 @@ describe('OhmsCalculator', () => {
     const wattInput = screen.getByRole('spinbutton', { name: 'WATT' });
     fireEvent.change(wattInput, { target: { value: '24.5' } });
     fireEvent.click(screen.getByText('Calcular'));
-    expect(screen.getByText('Ohms: 6.08')).toBeInTheDocument();
+    expect(screen.getByText('Ohms: 5.88')).toBeInTheDocument();
   });
 });

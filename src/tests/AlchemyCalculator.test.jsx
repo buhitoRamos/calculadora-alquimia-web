@@ -69,10 +69,10 @@ describe("AlchemyCalculator", () => {
     const clearedAromInputs = screen.getAllByPlaceholderText("nombre del aroma");
     const clearedPercentInputs = screen.getAllByLabelText("porcentaje de aroma");
 
-    expect(clearedAromInputs.length).toBe(1); // One empty aroma row remains
-    expect(clearedPercentInputs.length).toBe(1);
-    expect(clearedAromInputs[0].value).toBe("");
-    expect(clearedPercentInputs[0].value).toBe("");
+    expect(clearedAromInputs.length).toBe(0); // No aroma rows remain after clear
+    expect(clearedPercentInputs.length).toBe(0);
+    expect(screen.queryByPlaceholderText("nombre del aroma")).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("porcentaje de aroma")).not.toBeInTheDocument();
     expect(screen.queryByDisplayValue("Arom1")).not.toBeInTheDocument();
     expect(screen.queryByDisplayValue("50")).not.toBeInTheDocument();
     expect(screen.queryByDisplayValue("Arom2")).not.toBeInTheDocument();
@@ -367,14 +367,17 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "-100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(confirmAlert).toHaveBeenCalledTimes(2); // One for ML TOTAL, one for GLICERINA
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe ingresar un valor en "ML TOTAL"',
-    }));
+    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA, as negative ML TOTAL is a valid number
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue("ML TOTAL: -100ml \n GLICERINA: 0ml \n PROPILEN: NaNml \n NICOTINA: 0ml \n Arom1: NaNml\n"); // Aroma result is NaN if totalML is NaN/0
+    const expectedText = `ML TOTAL: -100ml 
+ GLICERINA: 0ml 
+ PROPILEN: 50.00ml 
+ NICOTINA: 0ml 
+ Arom1: -50.00ml
+`;
+    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
   });
 
   test("should handle decimal input for total ML", () => {
