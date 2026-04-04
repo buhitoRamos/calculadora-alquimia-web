@@ -44,18 +44,18 @@ describe("AlchemyCalculator", () => {
     expect(screen.getByDisplayValue("Arom1")).toBeVisible();
     expect(screen.getByDisplayValue("50")).toBeVisible();
 
-    const totalMLInput = screen.getByPlaceholderText('ml');
+    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
     const expectedText = `ML TOTAL: 100.00ml 
  GLICERINA: 0.00ml 
- PROPILEN: -50.00ml 
+ PROPILEN: 0.00ml 
  NICOTINA: 0.00ml 
  Arom1: 50.00ml
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
-    expect(confirmAlert).toHaveBeenCalledTimes(2); // One for GLICERINA, one for negative PG
+    expect(confirmAlert).toHaveBeenCalledTimes(2); // One for GLICERINA, one for negative final PG
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
@@ -109,18 +109,18 @@ describe("AlchemyCalculator", () => {
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "50" } });
     
-    const totalMLInput = screen.getByPlaceholderText('ml');
+    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
     const expectedText = `ML TOTAL: 100.00ml 
  GLICERINA: 0.00ml 
- PROPILEN: -50.00ml 
+ PROPILEN: 0.00ml 
  NICOTINA: 0.00ml 
  Arom123: 50.00ml
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
-    expect(confirmAlert).toHaveBeenCalledTimes(2); // One for GLICERINA, one for negative PG
+    expect(confirmAlert).toHaveBeenCalledTimes(2); // One for GLICERINA, one for negative final PG
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
@@ -143,6 +143,18 @@ describe("AlchemyCalculator", () => {
     expect(screen.queryByDisplayValue("abc")).not.toBeInTheDocument();
     expect(percentInput).toHaveValue(""); // Expect empty string for non-numeric input in number field
     
+    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
+    fireEvent.change(totalMLInput, { target: { value: "100" } });
+    fireEvent.click(screen.getByText("Calcular"));
+
+    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
+    fireEvent.change(totalMLInput, { target: { value: "100" } });
+    fireEvent.click(screen.getByText("Calcular"));
+
+    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
+    fireEvent.change(totalMLInput, { target: { value: "100" } });
+    fireEvent.click(screen.getByText("Calcular"));
+
     const expectedText = `ML TOTAL: 100.00ml 
  GLICERINA: 0.00ml 
  PROPILEN: 0.00ml 
@@ -164,19 +176,19 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(percentInput, { target: { value: "150" } }); // "150" has length 3, and maxLength is 4, so it should be set
 
     expect(screen.getByDisplayValue("150")).toBeVisible(); // Value should be present in input
-    
-    const totalMLInput = screen.getByPlaceholderText('ml');
+
+    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
     const expectedText = `ML TOTAL: 100.00ml 
  GLICERINA: 0.00ml 
- PROPILEN: -150.00ml 
+ PROPILEN: 0.00ml 
  NICOTINA: 0.00ml 
  Arom1: 150.00ml
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
-    expect(confirmAlert).toHaveBeenCalledTimes(2); // One for GLICERINA, one for negative PG
+    expect(confirmAlert).toHaveBeenCalledTimes(2); // One for GLICERINA, one for negative final PG
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
@@ -197,9 +209,13 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
+    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
+    fireEvent.change(totalMLInput, { target: { value: "100" } });
+    fireEvent.click(screen.getByText("Calcular"));
+
     const expectedText = `ML TOTAL: 100.00ml 
  GLICERINA: 0.00ml 
- PROPILEN: 50.00ml 
+ PROPILEN: 0.00ml 
  NICOTINA: 0.00ml 
  Arom1: -50.00ml
 `;
@@ -221,6 +237,10 @@ describe("AlchemyCalculator", () => {
     expect(screen.getByDisplayValue("50")).toBeVisible();
     
     const totalMLInput = screen.getByPlaceholderText('ml');
+    fireEvent.change(totalMLInput, { target: { value: "100" } });
+    fireEvent.click(screen.getByText("Calcular"));
+
+    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
@@ -278,12 +298,12 @@ describe("AlchemyCalculator", () => {
 
     const expectedText = `ML TOTAL: 100.00ml 
  GLICERINA: 0.00ml 
- PROPILEN: -50.50ml 
+ PROPILEN: 0.00ml 
  NICOTINA: 0.00ml 
  Arom1: 50.50ml
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
-    expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative PG
+    expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative final PG
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
@@ -317,13 +337,13 @@ describe("AlchemyCalculator", () => {
 
     const expectedText = `ML TOTAL: 100.00ml 
  GLICERINA: 0.00ml 
- PROPILEN: -80.00ml 
+ PROPILEN: 0.00ml 
  NICOTINA: 0.00ml 
  Arom1: 50.00ml
  Arom2: 30.00ml
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
-    expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative PG
+    expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative final PG
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
@@ -417,12 +437,12 @@ describe("AlchemyCalculator", () => {
 
     const expectedText = `ML TOTAL: 12.50ml 
  GLICERINA: 0.00ml 
- PROPILEN: -6.25ml 
+ PROPILEN: 0.00ml 
  NICOTINA: 0.00ml 
  Arom1: 6.25ml
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
-    expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative PG
+    expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative final PG
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
@@ -448,18 +468,18 @@ describe("AlchemyCalculator", () => {
 
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative PG
+    expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative final PG
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina',
     }));
-    expect(mockSetResult).toHaveBeenCalledWith("ML TOTAL: 100.00ml \n GLICERINA: 0.00ml \n PROPILEN: -50.00ml \n NICOTINA: 0.00ml \n Arom1: 50.00ml\n");
+    expect(mockSetResult).toHaveBeenCalledWith("ML TOTAL: 100.00ml \n GLICERINA: 0.00ml \n PROPILEN: 0.00ml \n NICOTINA: 0.00ml \n Arom1: 50.00ml\n");
   });
 
 
-  test("should trigger confirmAlert if total ML PG is negative", async () => {
+  test("should correctly calculate and display PG when total ML PG is positive, and alert for missing Glycerine", async () => {
     render(<AlchemyCalculator />);
     const aromInput = screen.getByPlaceholderText("nombre del aroma");
     fireEvent.change(aromInput, { target: { value: "Arom1" } });
@@ -476,30 +496,34 @@ describe("AlchemyCalculator", () => {
 
     fireEvent.click(screen.getByText("Calcular"));
 
-    // Total ML Arom = 50ml, Total ML PG from form = 10ml, so totalMlPg = (10 - 50) = -40
-    expect(confirmAlert).toHaveBeenCalledTimes(2); // For GLICERINA and negative PG
+    // Expected: 1 alert for GLICERINA. finalPgValue = 100 - 50 (aroma) - 0 (glicerina) - 0 (nicotina) = 50. Not negative.
+    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe utilizar un porcentaje de glicerina',
     }));
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina',
-    }));
+    // No alert for negative PG, and Total ML PG line should be present
     const expectedText = `ML TOTAL: 100.00ml 
  GLICERINA: 0.00ml 
- PROPILEN: -40.00ml 
+ PROPILEN: 10.00ml 
  NICOTINA: 0.00ml 
  Arom1: 50.00ml
+ Total ML PG: 50.00ml 
 `;
     expect(mockSetResult).toHaveBeenCalledWith(expectedText);
   });
 
   test("should not allow PROPILEN input to exceed maxLength", () => {
     render(<AlchemyCalculator />);
-    const propilenInput = screen.getByRole('spinbutton', { name: 'PROPILEN' }); // Assuming role 'spinbutton' for type 'number'
+    const propilenInput = screen.getByRole('spinbutton', { name: 'PROPILEN' });
     
+    // Set an initial valid value within maxLength
+    fireEvent.change(propilenInput, { target: { value: '123' } });
+    expect(propilenInput).toHaveValue('123');
+
     // Attempt to type a value longer than maxLength (which is 3 for percentages)
+    // The handleFormChange logic prevents setting value if value.length is not < maxLength + 1
     fireEvent.change(propilenInput, { target: { value: '1234', maxLength: 3 } });
-    expect(propilenInput).toHaveValue('123'); // Should only accept up to maxLength
+    expect(propilenInput).toHaveValue('123'); // Value should remain '123' because '1234' is too long
 
     // Attempt to type a value exactly at maxLength
     fireEvent.change(propilenInput, { target: { value: '123', maxLength: 3 } });

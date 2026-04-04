@@ -7,7 +7,7 @@ describe('OhmsCalculator', () => {
     render(<OhmsCalculator />);
     const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: '12' } });
-    const ohmsInput = screen.getByLabelText(/ohms/i);
+    const ohmsInput = screen.getByRole('spinbutton', { name: 'OHMS' });
     fireEvent.change(ohmsInput, { target: { value: '6' } });
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(expect.stringContaining('Amper: 2.00'));
