@@ -9,37 +9,25 @@ jest.mock('react-confirm-alert', () => ({
 }));
 
 const mockSetResult = jest.fn();
-const originalUseState = jest.requireActual('react').useState; // Get the actual useState hook
+
+// Mock the useState hook for the 'result' state specifically
+jest.mock('react', () => ({
+  ...jest.requireActual('react'), // Import and retain default behavior
+  useState: (initialValue) => {
+    // If the initialValue is an empty string, we assume it's the 'result' state
+    // and return our mock setter. Otherwise, use the actual useState.
+    if (initialValue === "") {
+      return [initialValue, mockSetResult];
+    }
+    return jest.requireActual('react').useState(initialValue);
+  },
+}));
 
 describe("AlchemyCalculator", () => {
-  let mockStateCounter;
-
   beforeEach(() => {
     // Clear mock calls before each test
     confirmAlert.mockClear();
     mockSetResult.mockClear();
-    jest.restoreAllMocks(); // Ensure a clean slate for useState mocks
-
-    // Reset the mock state counter for each test
-    mockStateCounter = 0;
-
-    // Spy on React.useState and apply specific mock implementations based on call order.
-    // This assumes the order of useState calls in AlchemyCalculator.jsx is:
-    // 1. aroms
-    // 2. form
-    // 3. result (which uses setResult)
-    jest.spyOn(React, 'useState').mockImplementation((initialValue) => {
-      mockStateCounter++;
-      if (mockStateCounter === 3) { // This is the expected call for the 'result' state
-        return [initialValue, mockSetResult]; // Return the initial value and our mock setter
-      }
-      // For all other useState calls, use the original implementation
-      return originalUseState(initialValue);
-    });
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks(); // Restore all mocks after each test
   });
 
   test("should add aroms and calculate total ML", () => {
