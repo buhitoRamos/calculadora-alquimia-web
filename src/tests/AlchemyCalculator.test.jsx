@@ -345,14 +345,11 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "0" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(confirmAlert).toHaveBeenCalledTimes(2); // One for ML TOTAL, one for GLICERINA
+    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for ML TOTAL, as component returns early
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Debe ingresar un valor en "ML TOTAL"',
     }));
-    expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar un porcentaje de glicerina',
-    }));
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue("ML TOTAL: 0ml \n GLICERINA: 0ml \n PROPILEN: NaNml \n NICOTINA: 0ml \n Arom1: NaNml\n"); // Aroma result is NaN if totalML is NaN/0
+    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(''); // Result area cleared
   });
 
   test("should trigger confirmAlert for negative input for total ML", async () => {
@@ -367,17 +364,11 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "-100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for GLICERINA, as negative ML TOTAL is a valid number
+    expect(confirmAlert).toHaveBeenCalledTimes(1); // Only for ML TOTAL, as component returns early
     expect(confirmAlert).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Debe utilizar un porcentaje de glicerina',
+      title: 'Debe ingresar un valor en "ML TOTAL"',
     }));
-    const expectedText = `ML TOTAL: -100ml 
- GLICERINA: 0ml 
- PROPILEN: 50.00ml 
- NICOTINA: 0ml 
- Arom1: -50.00ml
-`;
-    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(expectedText);
+    expect(screen.getByRole('textbox', { name: 'Alquimia' })).toHaveValue(''); // Result area cleared
   });
 
   test("should handle decimal input for total ML", () => {

@@ -75,27 +75,50 @@ const OhmsCalculator = () => {
   }
   const calculate = () => {
     let cont = 0;
-    form.map(function (form) {
-      if (form.value > 0) {
-        cont++
+    const parsedFormValues = form.map(item => {
+      const parsedValue = parseFloat(item.value);
+      if (!isNaN(parsedValue) && parsedValue > 0) {
+        cont++;
       }
-      return ""
+      return parsedValue;
     });
+
     if (cont === 2) {
-      const volt = form[0].value;
-      const watt = form[1].value;
-      const ohms = form[2].value;
-      const amp = form[3].value;
-      let text = amp === "" ? _amperCalculate(volt, ohms, watt) : ` Amper: ${amp}`;
-      text = text + "\n";
-      text = ohms === "" ? `${text} ${_ohmsCalculate(volt, watt, amp)}` : `${text} Ohms: ${ohms}`;
-      text = text + "\n";
-      text = watt === "" ? `${text} ${_wattCalculate(amp, volt, ohms)}` : `${text} Watt: ${watt}`;
-      text = text + "\n";
-      text = volt === "" ? `${text} ${_voltCalculate(amp, watt, ohms)}` : `${text} Volt: ${volt}`;
+      const volt = parsedFormValues[0];
+      const watt = parsedFormValues[1];
+      const ohms = parsedFormValues[2];
+      const amp = parsedFormValues[3];
+
+      let text = "";
+      if (amp === 0 || isNaN(amp)) { // If amp is not provided or invalid, calculate it
+        text += _amperCalculate(volt, ohms, watt);
+      } else { // Otherwise, use the provided amp
+        text += ` Amper: ${amp.toFixed(2)}`;
+      }
+      text += "\n";
+
+      if (ohms === 0 || isNaN(ohms)) {
+        text += _ohmsCalculate(volt, watt, amp);
+      } else {
+        text += `Ohms: ${ohms.toFixed(2)}`;
+      }
+      text += "\n";
+
+      if (watt === 0 || isNaN(watt)) {
+        text += _wattCalculate(amp, volt, ohms);
+      } else {
+        text += `Watt: ${watt.toFixed(2)}`;
+      }
+      text += "\n";
+
+      if (volt === 0 || isNaN(volt)) {
+        text += _voltCalculate(amp, watt, ohms);
+      } else {
+        text += `Volt: ${volt.toFixed(2)}`;
+      }
       setResult(text);
     } else {
-      setResult("Se denbe ingresar solo 2 valores para calcular el resto");
+      setResult(""); // Clear result if not exactly two positive inputs
     }
   }
   const clear = () => {

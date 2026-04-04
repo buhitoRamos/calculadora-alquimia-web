@@ -13,8 +13,14 @@ const AlchemyCalculator = () => {
       { name: "PROPILEN", value: "" },
       { name: "NICOTINA", value: "" }
     ]
-  )
+  );
   const [result, setResult] = useState("");
+
+  // Helper function to parse float or return 0 if NaN
+  const parseOrDefault = (value) => {
+    const parsed = parseFloat(value);
+    return isNaN(parsed) ? 0 : parsed;
+  };
 
   const addAroms = () => {
     const index = aroms.length;
@@ -87,42 +93,53 @@ const AlchemyCalculator = () => {
     });
   }
 
-  const _sumAroms = (totalML) => {
-    let totalMlArom = parseFloat(form[3].value) ? parseFloat(form[3].value) : 0;
+  const _sumAroms = (totalMLValue) => {
+    let totalMlAromPercent = parseOrDefault(form[3].value); // Nicotine percentage
     aroms.forEach(el => {
-      let formValue = parseFloat(el.value);
-      totalMlArom = totalMlArom + formValue;
-    })
-    totalMlArom = totalMlArom * totalML / 100;
-    return totalMlArom;
-  }
+      totalMlAromPercent += parseOrDefault(el.value); // Aroma percentages
+    });
+    return totalMlAromPercent * totalMLValue / 100;
+  };
 
   const calculate = () => {
     let text = "";
-    const totalML = parseFloat(form[0].value) ? parseFloat(form[0].value) :
+
+    const totalMLValue = parseOrDefault(form[0].value);
+    if (totalMLValue <= 0) {
       _confirmAlert('Debe ingresar un valor en "ML TOTAL"');
-    text = `${text} ${form[0].name}: ${form[0].value}ml \n`
-    const totalMlArom = _sumAroms(totalML);
-    let totalMlPg = (parseFloat(form[2].value) * totalML / 100) - totalMlArom;
+      setResult(""); // Clear result if ML TOTAL is invalid
+      return;
+    }
+    text += `${form[0].name}: ${totalMLValue.toFixed(2)}ml \n`;
+
+    const glicerinaPercent = parseOrDefault(form[1].value);
+    if (glicerinaPercent === 0) {
+      _confirmAlert('Debe utilizar un porcentaje de glicerina');
+    }
+
+    const propilenPercent = parseOrDefault(form[2].value);
+    const nicotinaPercent = parseOrDefault(form[3].value);
+
+    const totalMlArom = _sumAroms(totalMLValue); // This includes nicotine contribution in ML
+
+    // Calculate actual ML for Propilenglicol
+    let totalMlPg = (propilenPercent * totalMLValue / 100) - totalMlArom;
+
     if (totalMlPg < 0) {
       _confirmAlert('Debe utilizar mas % de Propilengligol o menos cantidad de aroma/nicotina');
     }
-    let totalGlicerina = form[1].value ? parseFloat(form[1].value) * totalML / 100 :
-      _confirmAlert('Debe utilizar un porcentaje de glicerina');;
-    text = `${text} ${form[1].name}: ${totalGlicerina}ml \n`
-    text = `${text} ${form[2].name}: ${totalMlPg}ml \n`
-    let mlNico = form[3].value ? form[3].value * totalML / 100 : 0;
-    text = `${text} ${form[3].name}: ${mlNico}ml \n`
+
+    text += `${form[1].name}: ${(glicerinaPercent * totalMLValue / 100).toFixed(2)}ml \n`;
+    text += `${form[2].name}: ${totalMlPg.toFixed(2)}ml \n`;
+    text += `${form[3].name}: ${(nicotinaPercent * totalMLValue / 100).toFixed(2)}ml \n`;
 
     aroms.forEach(el => {
-      let aromsValue = parseFloat(el.value);
-      aromsValue = totalML * aromsValue / 100;
-      aromsValue = aromsValue ? `${aromsValue}ml` : 'sin valor'
-      let name = el.name ? el.name : 'aroma'
-      text = `${text} ${name}: ${aromsValue}\n`
-    })
-    setResult(text)
-  }
+      const aromaValuePercent = parseOrDefault(el.value);
+      text += `${(el.name || 'aroma')}: ${(aromaValuePercent * totalMLValue / 100).toFixed(2)}ml\n`;
+    });
+
+    setResult(text);
+  };
 
   const clear = () => {
     setResult("");
