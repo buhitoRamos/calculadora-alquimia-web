@@ -117,8 +117,9 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
-    // "abc" will be saved in the state, but parseFloat(aroma.value) will be NaN
-    expect(screen.getByDisplayValue("abc")).toBeInTheDocument();
+    // "abc" will not be displayed, as type="number" filters it
+    expect(screen.queryByDisplayValue("abc")).not.toBeInTheDocument();
+    expect(percentInput.value).toBe(""); // Expect empty string for non-numeric input in number field
     
     const expectedText = `ML TOTAL: 100ml 
  GLICERINA: 0ml 
