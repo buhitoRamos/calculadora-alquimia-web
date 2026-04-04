@@ -54,8 +54,8 @@ Ohms: 6.00
 Watt: 3.00
 Volt: 12.00`);
     fireEvent.click(screen.getByText('Reset')); // Changed 'Limpiar' to 'Reset'
-    expect(voltInput).toHaveValue('');
-    expect(ohmsInput).toHaveValue('');
+    expect(voltInput).toHaveDisplayValue('');
+    expect(ohmsInput).toHaveDisplayValue('');
     expect(screen.getByRole('textbox', { name: 'Ley de Ohm' })).toHaveValue(''); // Clear result text area
   });
 
