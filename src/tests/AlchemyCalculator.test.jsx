@@ -24,7 +24,7 @@ describe("AlchemyCalculator", () => {
     expect(screen.getByDisplayValue("Arom1")).toBeInTheDocument();
     expect(screen.getByDisplayValue("50")).toBeInTheDocument();
 
-    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
+    const totalMLInput = screen.getByPlaceholderText('ml');
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
@@ -51,7 +51,7 @@ describe("AlchemyCalculator", () => {
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "50" } });
 
-    fireEvent.click(screen.getByText("Agregar aroma")); // Add another empty aroma slot
+    fireEvent.click(screen.getByText("+ Agregar aroma")); // Add another empty aroma slot
 
     const aromInput2 = screen.getAllByPlaceholderText("nombre del aroma")[1]; // Get the newly added aroma input
     fireEvent.change(aromInput2, { target: { value: "Arom2" } });
@@ -87,7 +87,7 @@ describe("AlchemyCalculator", () => {
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "50" } });
     
-    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
+    const totalMLInput = screen.getByPlaceholderText('ml');
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
@@ -113,7 +113,7 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(aromInput, { target: { value: "Arom1" } });
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "abc" } }); // This input will be treated as NaN
-    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
+    const totalMLInput = screen.getByPlaceholderText('ml');
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
@@ -142,7 +142,7 @@ describe("AlchemyCalculator", () => {
 
     expect(screen.getByDisplayValue("150")).toBeInTheDocument(); // Value should be present in input
     
-    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
+    const totalMLInput = screen.getByPlaceholderText('ml');
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
@@ -170,7 +170,7 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(percentInput, { target: { value: "-50" } });
     expect(screen.getByDisplayValue("-50")).toBeInTheDocument();
 
-    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
+    const totalMLInput = screen.getByPlaceholderText('ml');
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
@@ -197,7 +197,7 @@ describe("AlchemyCalculator", () => {
     expect(screen.getByDisplayValue("")).toBeInTheDocument(); // Name is empty
     expect(screen.getByDisplayValue("50")).toBeInTheDocument();
     
-    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
+    const totalMLInput = screen.getByPlaceholderText('ml');
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
@@ -223,7 +223,7 @@ describe("AlchemyCalculator", () => {
 
     expect(screen.getByDisplayValue("")).toBeInTheDocument(); // Percentage is empty
     
-    const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
+    const totalMLInput = screen.getByPlaceholderText('ml');
     fireEvent.change(totalMLInput, { target: { value: "100" } });
     fireEvent.click(screen.getByText("Calcular"));
 
@@ -278,7 +278,7 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(percentInputs[0], { target: { value: "50" } });
 
     // Click "Agregar aroma" to add a new aroma slot (index 1)
-    fireEvent.click(screen.getByText("Agregar aroma"));
+    fireEvent.click(screen.getByText("+ Agregar aroma"));
 
     // Get the newly added aroma inputs (now there are 2)
     aromInputs = screen.getAllByPlaceholderText("nombre del aroma");
@@ -339,7 +339,7 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(aromInput, { target: { value: "Arom1" } });
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "50" } });
-    fireEvent.click(screen.getByText("Agregar aroma"));
+    fireEvent.click(screen.getByText("+ Agregar aroma"));
 
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "0" } });
@@ -361,7 +361,7 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(aromInput, { target: { value: "Arom1" } });
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "50" } });
-    fireEvent.click(screen.getByText("Agregar aroma"));
+    fireEvent.click(screen.getByText("+ Agregar aroma"));
 
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "-100" } });
@@ -383,7 +383,7 @@ describe("AlchemyCalculator", () => {
     fireEvent.change(aromInput, { target: { value: "Arom1" } });
     const percentInput = screen.getByLabelText("porcentaje de aroma");
     fireEvent.change(percentInput, { target: { value: "50" } });
-    fireEvent.click(screen.getByText("Agregar aroma"));
+    fireEvent.click(screen.getByText("+ Agregar aroma"));
 
     const totalMLInput = screen.getByRole("spinbutton", { name: "ML TOTAL" });
     fireEvent.change(totalMLInput, { target: { value: "12.5" } });

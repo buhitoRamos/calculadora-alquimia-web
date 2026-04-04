@@ -5,7 +5,7 @@ import OhmsCalculator from '../components/Ohms-calculator/OhmsCalculator';
 describe('OhmsCalculator', () => {
   test('should calculate amperage when voltage and ohms are provided', () => {
     render(<OhmsCalculator />);
-    const voltInput = screen.getByLabelText(/voltios/i);
+    const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: '12' } });
     const ohmsInput = screen.getByLabelText(/ohms/i);
     fireEvent.change(ohmsInput, { target: { value: '6' } });
@@ -15,9 +15,9 @@ describe('OhmsCalculator', () => {
 
   test('should calculate wattage when voltage and amper are provided', () => {
     render(<OhmsCalculator />);
-    const voltInput = screen.getByLabelText(/voltios/i);
+    const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: '12' } });
-    const ampInput = screen.getByLabelText(/amper/i);
+    const ampInput = screen.getByRole('spinbutton', { name: 'AMPER' });
     fireEvent.change(ampInput, { target: { value: '2' } });
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.getByText('Watt: 24.00')).toBeInTheDocument();
@@ -25,9 +25,9 @@ describe('OhmsCalculator', () => {
 
   test('should calculate ohms when voltage and watt are provided', () => {
     render(<OhmsCalculator />);
-    const voltInput = screen.getByLabelText(/voltios/i);
+    const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: '12' } });
-    const wattInput = screen.getByLabelText(/watt/i);
+    const wattInput = screen.getByRole('spinbutton', { name: 'WATT' });
     fireEvent.change(wattInput, { target: { value: '24' } });
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.getByText('Ohms: 6.00')).toBeInTheDocument();
@@ -35,9 +35,9 @@ describe('OhmsCalculator', () => {
 
   test('should handle clear button', () => {
     render(<OhmsCalculator />);
-    const voltInput = screen.getByLabelText(/voltios/i);
+    const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: '12' } });
-    const ohmsInput = screen.getByLabelText(/ohms/i);
+    const ohmsInput = screen.getByRole('spinbutton', { name: 'OHMS' });
     fireEvent.change(ohmsInput, { target: { value: '6' } });
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.getByText('Amper: 2.00')).toBeInTheDocument();
@@ -49,7 +49,7 @@ describe('OhmsCalculator', () => {
 
   test('should handle invalid input for voltage', () => {
     render(<OhmsCalculator />);
-    const voltInput = screen.getByLabelText(/voltios/i);
+    const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: 'abc' } });
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.queryByText('Amper: 2')).not.toBeInTheDocument();
@@ -57,9 +57,9 @@ describe('OhmsCalculator', () => {
 
   test('should handle invalid input for ohms', () => {
     render(<OhmsCalculator />);
-    const voltInput = screen.getByLabelText(/voltios/i);
+    const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: '12' } });
-    const ohmsInput = screen.getByLabelText(/ohms/i);
+    const ohmsInput = screen.getByRole('spinbutton', { name: 'OHMS' });
     fireEvent.change(ohmsInput, { target: { value: 'abc' } });
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.queryByText('Amper: 2')).not.toBeInTheDocument();
@@ -67,7 +67,7 @@ describe('OhmsCalculator', () => {
 
   test('should handle invalid input for watt', () => {
     render(<OhmsCalculator />);
-    const voltInput = screen.getByLabelText(/voltios/i);
+    const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: '12' } });
     const wattInput = screen.getByLabelText(/watt/i);
     fireEvent.change(wattInput, { target: { value: 'abc' } });
@@ -77,7 +77,7 @@ describe('OhmsCalculator', () => {
 
   test('should handle empty input for voltage', () => {
     render(<OhmsCalculator />);
-    const voltInput = screen.getByLabelText(/voltios/i);
+    const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: '' } });
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.queryByText('Amper: 2')).not.toBeInTheDocument();
@@ -85,9 +85,9 @@ describe('OhmsCalculator', () => {
 
   test('should handle empty input for ohms', () => {
     render(<OhmsCalculator />);
-    const voltInput = screen.getByLabelText(/voltios/i);
+    const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: '12' } });
-    const ohmsInput = screen.getByLabelText(/ohms/i);
+    const ohmsInput = screen.getByRole('spinbutton', { name: 'OHMS' });
     fireEvent.change(ohmsInput, { target: { value: '' } });
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.queryByText('Amper: 2')).not.toBeInTheDocument();
@@ -95,9 +95,9 @@ describe('OhmsCalculator', () => {
 
   test('should handle empty input for watt', () => {
     render(<OhmsCalculator />);
-    const voltInput = screen.getByLabelText(/voltios/i);
+    const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: '12' } });
-    const wattInput = screen.getByLabelText(/watt/i);
+    const wattInput = screen.getByRole('spinbutton', { name: 'WATT' });
     fireEvent.change(wattInput, { target: { value: '' } });
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.queryByText('Amper: 2')).not.toBeInTheDocument();
@@ -113,9 +113,9 @@ describe('OhmsCalculator', () => {
 
   test('should handle zero input for ohms', () => {
     render(<OhmsCalculator />);
-    const voltInput = screen.getByLabelText(/voltios/i);
+    const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: '12' } });
-    const ohmsInput = screen.getByLabelText(/ohms/i);
+    const ohmsInput = screen.getByRole('spinbutton', { name: 'OHMS' });
     fireEvent.change(ohmsInput, { target: { value: '0' } });
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.queryByText('Amper: 2')).not.toBeInTheDocument();
@@ -123,9 +123,9 @@ describe('OhmsCalculator', () => {
 
   test('should handle zero input for watt', () => {
     render(<OhmsCalculator />);
-    const voltInput = screen.getByLabelText(/voltios/i);
+    const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: '12' } });
-    const wattInput = screen.getByLabelText(/watt/i);
+    const wattInput = screen.getByRole('spinbutton', { name: 'WATT' });
     fireEvent.change(wattInput, { target: { value: '0' } });
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.queryByText('Amper: 2')).not.toBeInTheDocument();
@@ -133,9 +133,9 @@ describe('OhmsCalculator', () => {
 
   test('should handle decimal input for voltage', () => {
     render(<OhmsCalculator />);
-    const voltInput = screen.getByLabelText(/voltios/i);
+    const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: '12.5' } });
-    const ohmsInput = screen.getByLabelText(/ohms/i);
+    const ohmsInput = screen.getByRole('spinbutton', { name: 'OHMS' });
     fireEvent.change(ohmsInput, { target: { value: '6' } });
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.getByText('Amper: 2.08')).toBeInTheDocument();
@@ -143,9 +143,9 @@ describe('OhmsCalculator', () => {
 
   test('should handle decimal input for ohms', () => {
     render(<OhmsCalculator />);
-    const voltInput = screen.getByLabelText(/voltios/i);
+    const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: '12' } });
-    const ohmsInput = screen.getByLabelText(/ohms/i);
+    const ohmsInput = screen.getByRole('spinbutton', { name: 'OHMS' });
     fireEvent.change(ohmsInput, { target: { value: '6.5' } });
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.getByText('Amper: 1.85')).toBeInTheDocument();
@@ -153,9 +153,9 @@ describe('OhmsCalculator', () => {
 
   test('should handle decimal input for watt', () => {
     render(<OhmsCalculator />);
-    const voltInput = screen.getByLabelText(/voltios/i);
+    const voltInput = screen.getByRole('spinbutton', { name: 'VOLTIOS' });
     fireEvent.change(voltInput, { target: { value: '12' } });
-    const wattInput = screen.getByLabelText(/watt/i);
+    const wattInput = screen.getByRole('spinbutton', { name: 'WATT' });
     fireEvent.change(wattInput, { target: { value: '24.5' } });
     fireEvent.click(screen.getByText('Calcular'));
     expect(screen.getByText('Ohms: 6.08')).toBeInTheDocument();
